@@ -57,7 +57,7 @@ var MainView = View.extend({
 
     _userKeydownHandler: function(e) {
         var direction = Utils.getInputDirection(e.keyCode);
-        log('_userKeydownHandler direction:', direction);
+        //log('_userKeydownHandler direction:', direction);
         if(direction !== undefined) {
             this.world.movePlayer(direction);
         }
@@ -99,6 +99,7 @@ var MainView = View.extend({
             seed.grow();
         });
         this.world.optimise();
+        this.world.collusionTest();
         this.world.draw();
     },
 

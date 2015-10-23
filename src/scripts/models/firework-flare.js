@@ -28,14 +28,14 @@ var FireworkFlare = State.extend({
                 return this.angleDegree * Math.PI / 180;
             }
         },
-        x: {
+        x: { //TODO: optimise this
             cache: false,
             //deps: ['parent.x', 'parent.age'],
             fn: function() {
                 return (this.parent.velocity * Math.cos(this.angleRadian) * this.parent.age) + this.parent.x;
             }
         },
-        y: {
+        y: { //TODO: optimise this
             cache: false,
             //deps: ['parent.y', 'parent.age'],
             fn: function() {
@@ -65,6 +65,17 @@ var FireworkFlare = State.extend({
     // Private Methods ----------------
 
     // Public Methods ----------------
+
+    isCollided: function(player) {
+        var distance = Math.sqrt(
+            Math.pow((this.x - player.x), 2) +
+            Math.pow((this.y - player.y), 2)
+        );
+        if(distance < (this.parent.size + player.size)) {
+            //log('COLLUSION! COLLUSION!!');
+            return true;
+        }
+    },
 
     draw: function(context) {
         context.beginPath();

@@ -69,7 +69,7 @@ var FireworkSeed = State.extend({
             this.flares.push(new FireworkFlare({ parent: this, angleDegree: angle }));
         }
 
-        log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'flares:', this.flares);
+        //log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'flares:', this.flares);
     },
 
     // Event Handlers ----------------
@@ -80,6 +80,20 @@ var FireworkSeed = State.extend({
 
     grow: function() {
         this.age ++;
+    },
+
+    isCollided: function(player) {
+        //log('isCollided');
+        var result = false;
+        Utils.forEach(this.flares, function(flare) {
+            if(flare.isCollided(player)) {
+                //log('COLUSSION! NOOO!!!');
+                //return true;
+                result = true;
+            }
+        });
+        //return false;
+        return result;
     },
 
     draw: function(context) {

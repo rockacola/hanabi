@@ -76,6 +76,15 @@ var WorldView = View.extend({
         });
     },
 
+    collusionTest: function() {
+        var _this = this;
+        Utils.forEach(this.seeds, function(seed) {
+            if(seed.isCollided(_this.player)) {
+                _this.player.crash();
+            }
+        });
+    },
+
     draw: function() {
         var _this = this;
         this.canvasContext.clearRect(0, 0, this.width, this.height);
