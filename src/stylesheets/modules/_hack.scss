@@ -1,0 +1,22 @@
+//
+// Modules / Hack
+//
+
+/*
+ * This is where you place unorganised styles and
+ * are subject to rapid refactoring
+ */
+
+
+.frame-count {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+    color: #666;
+    text-shadow: 3px 3px 0px white;
+    opacity: 0.9;
+}

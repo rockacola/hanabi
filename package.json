@@ -1,0 +1,37 @@
+{
+  "name": "WebApp",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "ampersand-app": "^1.0.4",
+    "ampersand-collection": "^1.4.5",
+    "ampersand-events": "^1.1.1",
+    "ampersand-model": "^5.0.3",
+    "ampersand-router": "^3.0.2",
+    "ampersand-state": "^4.5.6",
+    "ampersand-view": "^8.0.1",
+    "ampersand-view-switcher": "^2.0.0",
+    "bows": "^1.4.8",
+    "lodash": "^3.10.1",
+    "raf": "^3.1.0",
+    "universal-analytics": "^0.3.9"
+  },
+  "devDependencies": {
+    "browser-sync": "2.8.2",
+    "del": "^1.2.1",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-if": "^1.2.5",
+    "gulp-jshint": "^1.11.2",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-watch": "^4.3.4"
+  },
+  "//": [
+    "[there is where you add comments about this file]"
+  ]
+}
