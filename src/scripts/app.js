@@ -9,7 +9,6 @@
 var log = require('bows')('App');
 var App = require('ampersand-app');
 var MainView = require('./views/main');
-var ProfileView = require('./views/profile');
 var Site = require('./models/site');
 var Utils = require('./base/utils');
 
@@ -20,7 +19,6 @@ var Utils = require('./base/utils');
 
 var TheInstance = window.App = window.App || {
 
-    templateVersion: '1.0.1', // Version of the adapted UselessBoilerplate
     version: '1.0.0', // Version of this application instance
     isDebug: true, // Whether the application is run in debug mode
     visitor: Utils.ua('UA-46848707-8'), // Specific Google analytic code for this app instance
@@ -36,9 +34,6 @@ var TheInstance = window.App = window.App || {
         baseInstance.view = new MainView({
             model: baseInstance.site,
             el: document.querySelector('[data-hook="outline"]')
-        });
-        baseInstance.profileView = new ProfileView({
-            el: document.querySelector('[data-hook="app-profile"]')
         });
 
         //-- UA

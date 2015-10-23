@@ -8,7 +8,6 @@
  */
 
 html {
-    overflow-x: hidden; //NOTE: All useless apps are design to have no horizontal scroll and this is to hide app-profile out of view.
 }
 
 body {
@@ -20,6 +19,7 @@ body {
  */
 
 .outline {
+    overflow: hidden; //NOTE: Perhaps the canvas is causing some sort of overflow that will always have a vertical scrollbar.
     .dashboard {
         border: solid 1px rgba(black, 0.2);
         box-sizing: border-box;
