@@ -42,14 +42,13 @@ HTML5 Game
 ---
 
 ### Todo List
-* slight better HTML page with title and useful info
 * add player shape and add control to it
 * add concept of collusion with firework shapes and player shape
 * apply logic and display when collusion happened
 
 * clean up npm packages
 * refactor model naming in a way to support fireworks type and level
-
+* use listen and trigger instead of procedure
 
 ### Roadmaps
 * TBA

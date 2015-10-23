@@ -43,13 +43,25 @@ var MainView = View.extend({
 
         // Bootstrap
         this.world = new WorldView({ el: document.querySelector('[data-hook="drawing-board"]'), width: 800, height: 600 });
+        this.world.addPlayer();
 
         // Init setup
         this._toggleDebugMode(App.isDebug); //TODO: have this triggered in a 'more global' level
         this._incrementFrameCount();
+
+        // Bindings
+        document.addEventListener('keydown', this._userKeydownHandler.bind(this));
     },
 
     // Event Handlers ----------------
+
+    _userKeydownHandler: function(e) {
+        var direction = Utils.getInputDirection(e.keyCode);
+        log('_userKeydownHandler direction:', direction);
+        if(direction !== undefined) {
+            this.world.movePlayer(direction);
+        }
+    },
 
     // Private Methods ----------------
 

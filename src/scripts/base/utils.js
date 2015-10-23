@@ -25,6 +25,22 @@ var Utils = {
     ua: require('universal-analytics'),
     //xhr: require('xhr'),
 
+    // Game Control ----------------
+
+    getInputDirection: function(keyCode) {
+        if(keyCode == 38 || keyCode == 87) {
+            return 'up';
+        } else if (keyCode == 40 || keyCode == 83) {
+            return 'down';
+        } else if (keyCode == 37 || keyCode == 65) {
+            return 'left';
+        } else if (keyCode == 39 || keyCode == 68) {
+            return 'right';
+        } else {
+            return undefined;
+        }
+    },
+
     // Misc ----------------
 
     isNullOrUndefinedOrEmpty: function(obj) {
@@ -35,6 +51,8 @@ var Utils = {
         }
         return false;
     },
+
+
 };
 
 
