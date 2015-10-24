@@ -18,14 +18,12 @@ var Utils = require('../base/utils');
 var Player = State.extend({
 
     props: {
-        // Constant
-        PLAYER_VELOCITY: ['number', true, 3],
-        PLAYER_SIZE: ['number', true, 12],
-
         parent: 'object',
         colour:  ['string', true, 'blue'],
         x: ['number', true, 0],
         y: ['number', true, 0],
+        size: 'number',
+        velocity: 'number',
 
         isMovingUp:  ['boolean', true, false],
         isMovingDown:  ['boolean', true, false],
@@ -34,12 +32,6 @@ var Player = State.extend({
     },
 
     derived: {
-        size: { //NOTE: An interface to other objects (oppose than exposing/using constant) //TODO: This should be defined by the world.
-            deps: ['PLAYER_SIZE'],
-            fn: function() {
-                return this.PLAYER_SIZE;
-            }
-        },
     },
 
     collections: {
@@ -80,43 +72,43 @@ var Player = State.extend({
         if(this.isMovingUp && !this.isMovingDown) {
             if(!this.isMovingLeft && !this.isMovingRight) {
                 // Up
-                this.y -= this.PLAYER_VELOCITY;
+                this.y -= this.velocity;
             } else if(this.isMovingLeft && !this.isMovingRight) {
                 // Up Left
-                this.x -= this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
-                this.y -= this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+                this.x -= this.velocity * Math.cos(Utils.GetRadians(45));
+                this.y -= this.velocity * Math.sin(Utils.GetRadians(45));
             } else if (this.isMovingRight && !this.isMovingLeft) {
                 // Up Right
-                this.x += this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
-                this.y -= this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+                this.x += this.velocity * Math.cos(Utils.GetRadians(45));
+                this.y -= this.velocity * Math.sin(Utils.GetRadians(45));
             }
         } else if (this.isMovingDown && !this.isMovingUp) {
             if(!this.isMovingLeft && !this.isMovingRight) {
                 // Down
-                this.y += this.PLAYER_VELOCITY;
+                this.y += this.velocity;
             } else if(this.isMovingLeft && !this.isMovingRight) {
                 // Down Left
-                this.x -= this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
-                this.y += this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+                this.x -= this.velocity * Math.cos(Utils.GetRadians(45));
+                this.y += this.velocity * Math.sin(Utils.GetRadians(45));
             } else if (this.isMovingRight && !this.isMovingLeft) {
                 // Down Right
-                this.x += this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
-                this.y += this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+                this.x += this.velocity * Math.cos(Utils.GetRadians(45));
+                this.y += this.velocity * Math.sin(Utils.GetRadians(45));
             }
         } else if (!this.isMovingUp && !this.isMovingDown) {
             if(this.isMovingLeft && !this.isMovingRight) {
                 // Left
-                this.x -= this.PLAYER_VELOCITY;
+                this.x -= this.velocity;
             } else if (this.isMovingRight && !this.isMovingLeft) {
                 // Right
-                this.x += this.PLAYER_VELOCITY;
+                this.x += this.velocity;
             }
         }
     },
 
     draw: function(context) {
         context.beginPath();
-        context.arc(this.x, this.y, this.PLAYER_SIZE, 0, 2*Math.PI, false);
+        context.arc(this.x, this.y, this.size, 0, 2*Math.PI, false);
         context.fillStyle = this.colour;
         context.fill();
     },
