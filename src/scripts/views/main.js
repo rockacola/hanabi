@@ -28,7 +28,8 @@ var MainView = View.extend({
         gameOverTime: 'number',
         nextActionGameTime: ['number', true, 180],
 
-        level: ['number', true, 1],
+        attackType: ['string', true, 'peony'],
+        attackLevel: ['number', true, 1],
     },
 
     derived: {
@@ -147,9 +148,7 @@ var MainView = View.extend({
     },
 
     _addAttack: function() {
-        var id = this.frameCount;
-        this.world.addRandomAttack(id);
-        //log('there are [', this.world.seeds.length, '] seeds in the world');
+        this.world.addAttack(this.frameCount, this.attackType, this.attackLevel);
     },
 
     _setNextActionGameTime: function() {

@@ -59,16 +59,14 @@ var WorldView = View.extend({
         this.player = new Player({ parent: this, x: positionX, y: positionY, size: this.PLAYER_SIZE, velocity: this.PLAYER_VELOCITY });
     },
 
-    addRandomAttack: function(id) {
+    addAttack: function(designatedId, attackType, attackLevel) {
         // Random properties
         var positionX = Utils.random(0, this.width, false);
         var positionY = Utils.random(0, this.height, false);
-        var radius = 8;
-        var colour = 'green';
-        var ttl = 120; // in frame count
-        var velocity = 2;
 
-        this.seeds.push(new PeonySeed({_id: id, parent: this, x: positionX, y: positionY, size: radius, colour: colour, ttl: ttl, velocity: velocity}));
+        if(attackType == 'peony') {
+            this.seeds.push(new PeonySeed({ _id: designatedId, parent: this, x: positionX, y: positionY, level: attackLevel }));
+        }
     },
 
     setPlayerMovement: function(direction, toggle) {

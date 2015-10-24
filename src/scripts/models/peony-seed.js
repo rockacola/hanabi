@@ -18,29 +18,44 @@ var PeonyFlare = require('./peony-flare');
 var PeonySeed = State.extend({
 
     props: {
-        // Constant
-        FLARE_COUNT: ['number', true, 12],
-        //LAYER_COUNT
-
         _id: 'number',
         parent: 'object',
+        x: 'number',
+        y: 'number',
+        level: 'number',
         age: ['number', true, 0],
-        x: ['number', true, 0],
-        y: ['number', true, 0],
-        size: ['number', true, 1],
-        colour: 'string',
-        opacity: ['number', true, 1], // NOTE: Not been used.
         flares: ['array', true, function() { return []; }],
-        ttl: ['number', true, 60], // Time to Live in frame count
-        velocity: ['number', true, 1],
-        //acceleration
     },
 
     derived: {
-        alpha: { // NOTE: Not beeen used.
-            deps: ['opacity'],
+        size: {
+            deps: ['level'],
             fn: function() {
-                return (this.opacity <= 0) ? 0 : this.opacity;
+                return 8;
+            }
+        },
+        colour: {
+            deps: ['level'],
+            fn: function() {
+                return 'green';
+            }
+        },
+        ttl: { // in frame count
+            deps: ['level'],
+            fn: function() {
+                return 120;
+            }
+        },
+        velocity: {
+            deps: ['level'],
+            fn: function() {
+                return 2;
+            }
+        },
+        flareCount: {
+            deps: ['level'],
+            fn: function() {
+                return 12;
             }
         },
         isAlive: {
@@ -65,8 +80,8 @@ var PeonySeed = State.extend({
 
     initialize: function() {
         // Bootstrap
-        for(var i=0; i<this.FLARE_COUNT; i++) {
-            var angle = (360 / this.FLARE_COUNT) * (i);
+        for(var i=0; i<this.flareCount; i++) {
+            var angle = (360 / this.flareCount) * (i);
             this.flares.push(new PeonyFlare({ parent: this, angleDegrees: angle }));
         }
         //log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'flares:', this.flares);
