@@ -80,12 +80,15 @@ var PeonyFlare = State.extend({
     },
 
     draw: function(context) {
-        context.beginPath();
-        context.arc(this.x, this.y, this.parent.size, 0, 2*Math.PI, false);
-        //context.globalAlpha = this.parent.alpha;
-        context.fillStyle = this.parent.colour;
-        context.fill();
-        //log('draw. x:', this.x, 'y:', this.y, 'angleDegrees:', this.angleDegrees, 'angleRadians:', this.angleRadians);
+        if(!this.parent.isPreExisting) {
+            context.beginPath();
+            context.arc(this.x, this.y, this.parent.size, 0, 2*Math.PI, false);
+            //context.globalAlpha = this.parent.alpha;
+            context.fillStyle = this.parent.colour;
+            context.fill();
+            //log('draw. x:', this.x, 'y:', this.y, 'angleDegrees:', this.angleDegrees, 'angleRadians:', this.angleRadians);
+
+        }
     },
 
 });

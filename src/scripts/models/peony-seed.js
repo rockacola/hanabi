@@ -18,6 +18,8 @@ var PeonyFlare = require('./peony-flare');
 var PeonySeed = State.extend({
 
     props: {
+        ATTACK_INDICATOR_SIZE: ['number', true, 12],
+
         _id: 'number',
         parent: 'object',
         x: 'number',
@@ -58,6 +60,12 @@ var PeonySeed = State.extend({
                 return 12;
             }
         },
+        isPreExisting: {
+            deps: ['age'],
+            fn: function() {
+                return (this.age <= 0);
+            }
+        },
         isAlive: {
             deps: ['age', 'ttl'],
             fn: function() {
@@ -79,6 +87,9 @@ var PeonySeed = State.extend({
     },
 
     initialize: function() {
+        // Init
+        this._setAge();
+
         // Bootstrap
         for(var i=0; i<this.flareCount; i++) {
             var angle = (360 / this.flareCount) * (i);
@@ -91,26 +102,39 @@ var PeonySeed = State.extend({
 
     // Private Methods ----------------
 
+    _setAge: function() {
+        this.age = -120; //TODO: Reflect by level.
+    },
+
     // Public Methods ----------------
 
     grow: function() {
-        this.age ++;
+        this.age++;
     },
 
     isCollided: function(player) {
         var result = false;
-        Utils.forEach(this.flares, function(flare) {
-            if(flare.isCollided(player)) {
-                result = true;
-            }
-        });
+        if(!this.isPreExisting) {
+            Utils.forEach(this.flares, function(flare) {
+                if(flare.isCollided(player)) {
+                    result = true;
+                }
+            });
+        }
         return result;
     },
 
     draw: function(context) {
-        Utils.forEach(this.flares, function(flare) {
-            flare.draw(context);
-        });
+        if(this.isPreExisting) {
+            context.beginPath();
+            context.arc(this.x, this.y, this.ATTACK_INDICATOR_SIZE, 0, 2*Math.PI, false);
+            context.fillStyle = 'pink';
+            context.fill();
+        } else {
+            Utils.forEach(this.flares, function(flare) {
+                flare.draw(context);
+            });
+        }
     }
 });
 
