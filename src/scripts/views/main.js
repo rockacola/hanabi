@@ -23,21 +23,35 @@ var MainView = View.extend({
         frameCount: ['number', true, 0],
         nextActionFrame: ['number', true, 0],
         world: 'object',
-        gameTime: ['number', true, 0],
-        isPaused: ['boolean', true, false],
+        gameClock: ['number', true, 0],
+        isGamePaused: ['boolean', true, false],
+        isGameStarted: ['boolean', true, false],
+        gameOverTime: 'number',
     },
 
     derived: {
+        isGameOver: {
+            deps: ['gameOverTime'],
+            fn: function() {
+                return (this.gameOverTime !== undefined);
+            }
+        },
+        isGameOn: {
+            deps: ['isGameStarted', 'isGamePaused', 'isGameOver'],
+            fn: function() {
+                return (this.isGameStarted && !this.isGamePaused && !this.isGameOver);
+            }
+        },
         statusDescription: {
             deps: ['frameCount'],
             fn: function() {
-                var text = 'running';
-                if(this.isPaused) {
-                    text = 'paused';
-                } else if (this.world !== undefined) {
-                    if(!this.world.player.isAlive) {
-                        text = 'game over. finished at: ' + this.world.player.crashTime;
-                    }
+                var text = 'running, press [p] to pause.';
+                if(!this.isGameStarted) {
+                    text = 'press [space] to start the game, [p] to pause.';
+                } else if(this.isGameOver) {
+                    text = 'game over on: ' + this.gameOverTime + '. Refresh page to restart';
+                } else if(this.isGamePaused) {
+                    text = 'paused, press [p] to resume.';
                 }
                 return text;
             }
@@ -45,7 +59,7 @@ var MainView = View.extend({
     },
 
     bindings: {
-        'gameTime': {
+        "gameClock": {
             type: 'text',
             hook: 'game-time'
         },
@@ -72,6 +86,7 @@ var MainView = View.extend({
         // Bindings
         document.addEventListener('keydown', this._userKeydownHandler.bind(this));
         document.addEventListener('keyup', this._userKeyupHandler.bind(this));
+        this.listenTo(this.world.player, 'collusion', this._playerCrashedHandler.bind(this));
     },
 
     // Event Handlers ----------------
@@ -82,6 +97,11 @@ var MainView = View.extend({
 
     _userKeyupHandler: function(e) {
         this._performUserCommand(e);
+    },
+
+    _playerCrashedHandler: function() {
+        //log('_playerCrashedHandler. this:', this);
+        this.gameOverTime = this.gameClock;
     },
 
     // Private Methods ----------------
@@ -106,7 +126,7 @@ var MainView = View.extend({
     },
 
     _incrementFrameCountAction: function() {
-        if(!this.isPaused) {
+        if(!this.isGamePaused) {
             if(this.frameCount >= this.nextActionFrame) { //NOTE: Notice that this is not using == to capture frameskip (which should not have happen anyway)
                 // Please a firework object onto world
                 this._addFirework();
@@ -116,11 +136,13 @@ var MainView = View.extend({
             }
 
             // Action for each frame
-            this.gameTime++;
-            this.world.grow();
-            this.world.optimise();
-            this.world.collusionTest(this.gameTime);
-            this.world.draw();
+            if(this.isGameOn) {
+                this.gameClock++;
+                this.world.grow();
+                this.world.optimise();
+                this.world.collusionTest(this.gameClock);
+                this.world.draw();
+            }
         }
     },
 
@@ -135,8 +157,10 @@ var MainView = View.extend({
         if(command !== undefined) {
             if(e.type == 'keydown') {
                 e.preventDefault();
-                if(command == 'pause') {
-                    this.isPaused = !this.isPaused;
+                if(command == 'start') {
+                    this.isGameStarted = true;
+                } else if(command == 'pause') {
+                    this.isGamePaused = !this.isGamePaused;
                 } else {
                     this.world.setPlayerMovement(command, true);
                 }

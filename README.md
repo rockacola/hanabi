@@ -43,23 +43,20 @@ HTML5 Game
 
 ### Todo List
 
+* set proper game level(s)
+* add game delay starts
 * refactor model naming in a way to support fireworks type and level
-
-* add touch drag support
-
-* add 2nd layer to the firework seed
-* add fades off effect
 * add new firework seed warning visual
 * seeded random number
 
-* HTML showing more info: current state
-* add game start mechanism
-
+* add touch drag support
+* add fades off effect
 * use image spirit for player instead of a circle
 * tweak collusion torrence
 * has near collusion visual indication
+* tweak page and canvas colours
 
-* set proper game level(s)
+* display time in seconds instead of frames
 
 ### Roadmaps
 * TBA

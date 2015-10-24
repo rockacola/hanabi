@@ -31,8 +31,6 @@ var Player = State.extend({
         isMovingDown:  ['boolean', true, false],
         isMovingLeft:  ['boolean', true, false],
         isMovingRight:  ['boolean', true, false],
-
-        crashTime: 'number',
     },
 
     derived: {
@@ -42,12 +40,6 @@ var Player = State.extend({
                 return this.PLAYER_SIZE;
             }
         },
-        isAlive: {
-            deps: ['crashTime'],
-            fn: function() {
-                return (this.crashTime === undefined);
-            }
-        }
     },
 
     collections: {
@@ -63,7 +55,6 @@ var Player = State.extend({
     },
 
     initialize: function() {
-        //log('initialize() crashTime:', this.crashTime);
     },
 
     // Event Handlers ----------------
@@ -130,11 +121,9 @@ var Player = State.extend({
         context.fill();
     },
 
-    crash: function(gameTime) {
-        if(this.crashTime === undefined) { //NOTE: Only writing it on the first crash
-            this.crashTime = gameTime;
-        }
+    collusion: function(gameTime) {
         this.colour = 'red';
+        this.trigger('collusion');
     }
 
 });

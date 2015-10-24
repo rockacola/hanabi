@@ -38,9 +38,12 @@ var Utils = {
             return 'right';
         } else if (keyCode == 80) {
             return 'pause';
-        } else {
-            return undefined;
+        } else if (keyCode == 32) {
+            return 'start';
         }
+
+        //log('[ERROR] Unknown keyCode: ', keyCode);
+        return undefined;
     },
 
     // Geometry  ----------------

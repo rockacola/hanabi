@@ -89,7 +89,7 @@ var WorldView = View.extend({
         var _this = this;
         Utils.forEach(this.seeds, function(seed) {
             if(seed.isCollided(_this.player)) {
-                _this.player.crash(gameTime);
+                _this.player.collusion(gameTime);
             }
         });
     },
