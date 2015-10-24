@@ -152,7 +152,14 @@ var MainView = View.extend({
     },
 
     _setNextActionGameTime: function() {
-        this.nextActionGameTime = this.gameClock + 90; //TODO: introduce acceleration
+        var baseInterval = 180;
+        var minInterval = 30;
+        var accelerationRate = 3;
+        var nextInterval = baseInterval - Math.round(this.gameClock / 60 * accelerationRate);
+        nextInterval = (nextInterval < minInterval) ? minInterval : nextInterval;
+        log('nextInterval:', nextInterval);
+
+        this.nextActionGameTime = this.gameClock + nextInterval;
     },
 
     _performUserCommand: function(e) {
