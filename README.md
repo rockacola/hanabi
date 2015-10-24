@@ -52,7 +52,6 @@ HTML5 Game
 * add touch drag support
 * add fades off effect
 * use image spirit for player instead of a circle
-* tweak collusion torrence
 * has near collusion visual indication
 * tweak page and canvas colours
 

@@ -23,6 +23,7 @@ var FireworkSeed = State.extend({
         //LAYER_COUNT
 
         _id: 'number',
+        parent: 'object',
         age: ['number', true, 0],
         x: ['number', true, 0],
         y: ['number', true, 0],

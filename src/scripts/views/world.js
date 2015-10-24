@@ -19,6 +19,8 @@ var Player = require('../models/player');
 var WorldView = View.extend({
 
     props: {
+        COLLUSION_TOLERANCE: ['number', true, 0.2], // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
+
         width: 'number',
         height: 'number',
         canvasContext: 'object',
@@ -64,7 +66,7 @@ var WorldView = View.extend({
         var ttl = 120; // in frame count
         var velocity = 2;
 
-        this.seeds.push(new FireworkSeed({_id: id, x: positionX, y: positionY, size: radius, colour: colour, ttl: ttl, velocity: velocity}));
+        this.seeds.push(new FireworkSeed({_id: id, parent: this, x: positionX, y: positionY, size: radius, colour: colour, ttl: ttl, velocity: velocity}));
     },
 
     setPlayerMovement: function(direction, toggle) {

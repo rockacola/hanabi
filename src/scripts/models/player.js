@@ -34,7 +34,7 @@ var Player = State.extend({
     },
 
     derived: {
-        size: { //NOTE: An interface to other objects (oppose than exposing/using constant)
+        size: { //NOTE: An interface to other objects (oppose than exposing/using constant) //TODO: This should be defined by the world.
             deps: ['PLAYER_SIZE'],
             fn: function() {
                 return this.PLAYER_SIZE;
