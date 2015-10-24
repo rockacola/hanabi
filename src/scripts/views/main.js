@@ -21,12 +21,15 @@ var MainView = View.extend({
 
     props: {
         frameCount: ['number', true, 0],
-        nextActionFrame: ['number', true, 0],
+
         world: 'object',
         gameClock: ['number', true, 0],
         isGamePaused: ['boolean', true, false],
         isGameStarted: ['boolean', true, false],
         gameOverTime: 'number',
+        nextActionGameTime: ['number', true, 180],
+
+        level: ['number', true, 1],
     },
 
     derived: {
@@ -127,12 +130,10 @@ var MainView = View.extend({
 
     _incrementFrameCountAction: function() {
         if(!this.isGamePaused) {
-            if(this.frameCount >= this.nextActionFrame) { //NOTE: Notice that this is not using == to capture frameskip (which should not have happen anyway)
-                // Please a firework object onto world
+            if(this.gameClock >= this.nextActionGameTime) {
+                this._setNextActionGameTime();
                 this._addFirework();
-
-                this.nextActionFrame = this.frameCount + Utils.random(60, 300, false); //TODO: this doesn't work with pause
-                log('action frame:', this.frameCount, 'next action frame:', this.nextActionFrame);
+                log('frame:', this.frameCount, 'game time:', this.gameClock, 'next action:', this.nextActionGameTime);
             }
 
             // Action for each frame
@@ -150,6 +151,10 @@ var MainView = View.extend({
         var fireworkId = this.frameCount;
         this.world.addRandomFirework(fireworkId);
         //log('there are [', this.world.seeds.length, '] seeds in the world');
+    },
+
+    _setNextActionGameTime: function() {
+        this.nextActionGameTime = this.gameClock + 120; //TODO: introduce acceleration
     },
 
     _performUserCommand: function(e) {
