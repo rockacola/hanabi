@@ -53,7 +53,6 @@ HTML5 Game
 * add new firework seed warning visual
 * seeded random number
 
-* prevent arrow key moving page scrollbar
 
 ### Roadmaps
 * TBA

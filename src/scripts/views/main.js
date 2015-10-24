@@ -60,6 +60,7 @@ var MainView = View.extend({
         var direction = Utils.GetInputDirection(e.keyCode);
         //log('_userKeydownHandler direction:', direction);
         if(direction !== undefined) {
+            e.preventDefault();
             this.world.setPlayerMovement(direction, true);
         }
     },
