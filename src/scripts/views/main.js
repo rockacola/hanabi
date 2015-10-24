@@ -10,7 +10,6 @@ var App = require('ampersand-app');
 var View = require('ampersand-view');
 var Utils = require('../base/utils');
 var WorldView = require('./world');
-var FireworkSeed = require('../models/firework-seed');
 
 
 
@@ -132,7 +131,7 @@ var MainView = View.extend({
         if(!this.isGamePaused) {
             if(this.gameClock >= this.nextActionGameTime) {
                 this._setNextActionGameTime();
-                this._addFirework();
+                this._addAttack();
                 log('frame:', this.frameCount, 'game time:', this.gameClock, 'next action:', this.nextActionGameTime);
             }
 
@@ -147,9 +146,9 @@ var MainView = View.extend({
         }
     },
 
-    _addFirework: function() {
-        var fireworkId = this.frameCount;
-        this.world.addRandomFirework(fireworkId);
+    _addAttack: function() {
+        var id = this.frameCount;
+        this.world.addRandomAttack(id);
         //log('there are [', this.world.seeds.length, '] seeds in the world');
     },
 

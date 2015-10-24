@@ -41,14 +41,14 @@ HTML5 Game
 
 ---
 
+### Resources
+* [Types of fireworks effects](http://www.fireworks.com/fireworks-university/fireworks-glossary/)
+
 ### Todo List
 
-* set proper game level(s)
-* add game delay starts
-* refactor model naming in a way to support fireworks type and level
 * add new firework seed warning visual
-* seeded random number
 
+* set proper game level(s)
 * add touch drag support
 * add fades off effect
 * use image spirit for player instead of a circle
@@ -56,6 +56,8 @@ HTML5 Game
 * tweak page and canvas colours
 
 * display time in seconds instead of frames
+* better algorithm on where to generate firework seed
+* seeded random number
 
 ### Roadmaps
 * TBA

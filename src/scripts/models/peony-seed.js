@@ -1,21 +1,21 @@
 //
-// Site / Model / Firework Seed
+// Site / Model / Peony Seed
 //
 
 'use strict';
 
 // Dependencies
-var log = require('bows')('FireworkSeed');
+var log = require('bows')('PeonySeed');
 var State = require('ampersand-state');
 var Utils = require('../base/utils');
-var FireworkFlare = require('./firework-flare');
+var PeonyFlare = require('./peony-flare');
 
 
 
 // App State
 // --------------------------------------------------
 
-var FireworkSeed = State.extend({
+var PeonySeed = State.extend({
 
     props: {
         // Constant
@@ -67,9 +67,8 @@ var FireworkSeed = State.extend({
         // Bootstrap
         for(var i=0; i<this.FLARE_COUNT; i++) {
             var angle = (360 / this.FLARE_COUNT) * (i);
-            this.flares.push(new FireworkFlare({ parent: this, angleDegrees: angle }));
+            this.flares.push(new PeonyFlare({ parent: this, angleDegrees: angle }));
         }
-
         //log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'flares:', this.flares);
     },
 
@@ -84,16 +83,12 @@ var FireworkSeed = State.extend({
     },
 
     isCollided: function(player) {
-        //log('isCollided');
         var result = false;
         Utils.forEach(this.flares, function(flare) {
             if(flare.isCollided(player)) {
-                //log('COLUSSION! NOOO!!!');
-                //return true;
                 result = true;
             }
         });
-        //return false;
         return result;
     },
 
@@ -109,4 +104,4 @@ var FireworkSeed = State.extend({
 // Exports
 // --------------------------------------------------
 
-module.exports = FireworkSeed;
+module.exports = PeonySeed;

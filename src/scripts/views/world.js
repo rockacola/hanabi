@@ -8,7 +8,7 @@
 var log = require('bows')('World');
 var View = require('ampersand-view');
 var Utils = require('../base/utils');
-var FireworkSeed = require('../models/firework-seed');
+var PeonySeed = require('../models/peony-seed');
 var Player = require('../models/player');
 
 
@@ -59,7 +59,7 @@ var WorldView = View.extend({
         this.player = new Player({ parent: this, x: positionX, y: positionY, size: this.PLAYER_SIZE, velocity: this.PLAYER_VELOCITY });
     },
 
-    addRandomFirework: function(id) {
+    addRandomAttack: function(id) {
         // Random properties
         var positionX = Utils.random(0, this.width, false);
         var positionY = Utils.random(0, this.height, false);
@@ -68,7 +68,7 @@ var WorldView = View.extend({
         var ttl = 120; // in frame count
         var velocity = 2;
 
-        this.seeds.push(new FireworkSeed({_id: id, parent: this, x: positionX, y: positionY, size: radius, colour: colour, ttl: ttl, velocity: velocity}));
+        this.seeds.push(new PeonySeed({_id: id, parent: this, x: positionX, y: positionY, size: radius, colour: colour, ttl: ttl, velocity: velocity}));
     },
 
     setPlayerMovement: function(direction, toggle) {

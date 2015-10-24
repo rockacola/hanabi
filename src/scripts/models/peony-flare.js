@@ -1,11 +1,11 @@
 //
-// Site / Model / Firework Flare
+// Site / Model / Peony Flare
 //
 
 'use strict';
 
 // Dependencies
-var log = require('bows')('FireworkFlare');
+var log = require('bows')('PeonyFlare');
 var App = require('ampersand-app');
 var State = require('ampersand-state');
 var Utils = require('../base/utils');
@@ -15,7 +15,7 @@ var Utils = require('../base/utils');
 // App State
 // --------------------------------------------------
 
-var FireworkFlare = State.extend({
+var PeonyFlare = State.extend({
 
     props: {
         parent: 'object',
@@ -95,4 +95,4 @@ var FireworkFlare = State.extend({
 // Exports
 // --------------------------------------------------
 
-module.exports = FireworkFlare;
+module.exports = PeonyFlare;
