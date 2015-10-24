@@ -57,7 +57,7 @@ var MainView = View.extend({
     // Event Handlers ----------------
 
     _userKeydownHandler: function(e) {
-        var direction = Utils.getInputDirection(e.keyCode);
+        var direction = Utils.GetInputDirection(e.keyCode);
         //log('_userKeydownHandler direction:', direction);
         if(direction !== undefined) {
             this.world.setPlayerMovement(direction, true);
@@ -65,7 +65,7 @@ var MainView = View.extend({
     },
 
     _userKeyupHandler: function(e) {
-        var direction = Utils.getInputDirection(e.keyCode);
+        var direction = Utils.GetInputDirection(e.keyCode);
         //log('_userKeyupHandler direction:', direction);
         if(direction !== undefined) {
             this.world.setPlayerMovement(direction, false);

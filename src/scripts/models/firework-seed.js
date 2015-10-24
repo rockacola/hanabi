@@ -66,7 +66,7 @@ var FireworkSeed = State.extend({
         // Bootstrap
         for(var i=0; i<this.FLARE_COUNT; i++) {
             var angle = (360 / this.FLARE_COUNT) * (i);
-            this.flares.push(new FireworkFlare({ parent: this, angleDegree: angle }));
+            this.flares.push(new FireworkFlare({ parent: this, angleDegrees: angle }));
         }
 
         //log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'flares:', this.flares);

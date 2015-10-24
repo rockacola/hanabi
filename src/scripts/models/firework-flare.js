@@ -19,28 +19,28 @@ var FireworkFlare = State.extend({
 
     props: {
         parent: 'object',
-        angleDegree: 'number',
+        angleDegrees: 'number',
     },
 
     derived: {
-        angleRadian: {
-            deps: ['angleDegree'],
+        angleRadians: {
+            deps: ['angleDegrees'],
             fn: function() {
-                return Utils.GetRadians(this.angleDegree);
+                return Utils.GetRadians(this.angleDegrees);
             }
         },
         x: { //TODO: optimise this
             cache: false,
             //deps: ['parent.x', 'parent.age'],
             fn: function() {
-                return (this.parent.velocity * Math.cos(this.angleRadian) * this.parent.age) + this.parent.x;
+                return (this.parent.velocity * Math.cos(this.angleRadians) * this.parent.age) + this.parent.x;
             }
         },
         y: { //TODO: optimise this
             cache: false,
             //deps: ['parent.y', 'parent.age'],
             fn: function() {
-                return (this.parent.velocity * Math.sin(this.angleRadian) * this.parent.age) + this.parent.y;
+                return (this.parent.velocity * Math.sin(this.angleRadians) * this.parent.age) + this.parent.y;
             }
         },
     },
@@ -84,7 +84,7 @@ var FireworkFlare = State.extend({
         //context.globalAlpha = this.parent.alpha;
         context.fillStyle = this.parent.colour;
         context.fill();
-        //log('draw. x:', this.x, 'y:', this.y, 'angleDegree:', this.angleDegree, 'angleRadian:', this.angleRadian);
+        //log('draw. x:', this.x, 'y:', this.y, 'angleDegrees:', this.angleDegrees, 'angleRadians:', this.angleRadians);
     },
 
 });

@@ -27,7 +27,7 @@ var Utils = {
 
     // Game Control ----------------
 
-    getInputDirection: function(keyCode) {
+    GetInputDirection: function(keyCode) {
         if(keyCode == 38 || keyCode == 87) {
             return 'up';
         } else if (keyCode == 40 || keyCode == 83) {
@@ -53,7 +53,7 @@ var Utils = {
 
     // Validation ----------------
 
-    isNullOrUndefinedOrEmpty: function(obj) {
+    IsNullOrUndefinedOrEmpty: function(obj) {
         if(obj === undefined || obj === null) {
             return true;
         } else if(obj.length <= 0) {

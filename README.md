@@ -53,8 +53,7 @@ HTML5 Game
 * add new firework seed warning visual
 * seeded random number
 
-* correct spelling 'degrees', 'radians'
-* Utils method should be pascal case
+* prevent arrow key moving page scrollbar
 
 ### Roadmaps
 * TBA
