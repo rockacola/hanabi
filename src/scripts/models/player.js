@@ -8,6 +8,7 @@
 var log = require('bows')('Player');
 var App = require('ampersand-app');
 var State = require('ampersand-state');
+var Utils = require('../base/utils');
 
 
 
@@ -25,6 +26,11 @@ var Player = State.extend({
         colour:  ['string', true, 'blue'],
         x: ['number', true, 0],
         y: ['number', true, 0],
+
+        isMovingUp:  ['boolean', true, false],
+        isMovingDown:  ['boolean', true, false],
+        isMovingLeft:  ['boolean', true, false],
+        isMovingRight:  ['boolean', true, false],
     },
 
     derived: {
@@ -58,15 +64,54 @@ var Player = State.extend({
 
     // Public Methods ----------------
 
-    move: function(direction) {
+    setMovement: function(direction, toggle) {
         if(direction == 'up') {
-            this.y -= this.PLAYER_VELOCITY;
+            this.isMovingUp = toggle;
         } else if (direction == 'down') {
-            this.y += this.PLAYER_VELOCITY;
+            this.isMovingDown = toggle;
         } else if (direction == 'left') {
-            this.x -= this.PLAYER_VELOCITY;
+            this.isMovingLeft = toggle;
         } else if (direction == 'right') {
-            this.x += this.PLAYER_VELOCITY;
+            this.isMovingRight = toggle;
+        }
+    },
+
+    grow: function() {
+        // Examine vertical movements first
+        if(this.isMovingUp && !this.isMovingDown) {
+            if(!this.isMovingLeft && !this.isMovingRight) {
+                // Up
+                this.y -= this.PLAYER_VELOCITY;
+            } else if(this.isMovingLeft && !this.isMovingRight) {
+                // Up Left
+                this.x -= this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
+                this.y -= this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+            } else if (this.isMovingRight && !this.isMovingLeft) {
+                // Up Right
+                this.x += this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
+                this.y -= this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+            }
+        } else if (this.isMovingDown && !this.isMovingUp) {
+            if(!this.isMovingLeft && !this.isMovingRight) {
+                // Down
+                this.y += this.PLAYER_VELOCITY;
+            } else if(this.isMovingLeft && !this.isMovingRight) {
+                // Down Left
+                this.x -= this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
+                this.y += this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+            } else if (this.isMovingRight && !this.isMovingLeft) {
+                // Down Right
+                this.x += this.PLAYER_VELOCITY * Math.cos(Utils.GetRadians(45));
+                this.y += this.PLAYER_VELOCITY * Math.sin(Utils.GetRadians(45));
+            }
+        } else if (!this.isMovingUp && !this.isMovingDown) {
+            if(this.isMovingLeft && !this.isMovingRight) {
+                // Left
+                this.x -= this.PLAYER_VELOCITY;
+            } else if (this.isMovingRight && !this.isMovingLeft) {
+                // Right
+                this.x += this.PLAYER_VELOCITY;
+            }
         }
     },
 

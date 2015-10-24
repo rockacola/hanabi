@@ -41,7 +41,17 @@ var Utils = {
         }
     },
 
-    // Misc ----------------
+    // Geometry  ----------------
+
+    GetRadians: function(degreesValue) {
+        return degreesValue * Math.PI / 180;
+    },
+
+    GetDegrees: function(radiansValue) {
+        return radiansValue * 180 / Math.PI;
+    },
+
+    // Validation ----------------
 
     isNullOrUndefinedOrEmpty: function(obj) {
         if(obj === undefined || obj === null) {
@@ -52,7 +62,7 @@ var Utils = {
         return false;
     },
 
-
+    // Misc ----------------
 };
 
 

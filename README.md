@@ -42,13 +42,19 @@ HTML5 Game
 ---
 
 ### Todo List
-* add player shape and add control to it
-* add concept of collusion with firework shapes and player shape
-* apply logic and display when collusion happened
-
 * clean up npm packages
 * refactor model naming in a way to support fireworks type and level
 * use listen and trigger instead of procedure
+
+* add touch drag support
+
+* add 2nd layer to the firework seed
+* add fades off effect
+* add new firework seed warning visual
+* seeded random number
+
+* correct spelling 'degrees', 'radians'
+* Utils method should be pascal case
 
 ### Roadmaps
 * TBA

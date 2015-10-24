@@ -8,6 +8,7 @@
 var log = require('bows')('FireworkFlare');
 var App = require('ampersand-app');
 var State = require('ampersand-state');
+var Utils = require('../base/utils');
 
 
 
@@ -25,7 +26,7 @@ var FireworkFlare = State.extend({
         angleRadian: {
             deps: ['angleDegree'],
             fn: function() {
-                return this.angleDegree * Math.PI / 180;
+                return Utils.GetRadians(this.angleDegree);
             }
         },
         x: { //TODO: optimise this

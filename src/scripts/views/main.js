@@ -51,6 +51,7 @@ var MainView = View.extend({
 
         // Bindings
         document.addEventListener('keydown', this._userKeydownHandler.bind(this));
+        document.addEventListener('keyup', this._userKeyupHandler.bind(this));
     },
 
     // Event Handlers ----------------
@@ -59,7 +60,15 @@ var MainView = View.extend({
         var direction = Utils.getInputDirection(e.keyCode);
         //log('_userKeydownHandler direction:', direction);
         if(direction !== undefined) {
-            this.world.movePlayer(direction);
+            this.world.setPlayerMovement(direction, true);
+        }
+    },
+
+    _userKeyupHandler: function(e) {
+        var direction = Utils.getInputDirection(e.keyCode);
+        //log('_userKeyupHandler direction:', direction);
+        if(direction !== undefined) {
+            this.world.setPlayerMovement(direction, false);
         }
     },
 
@@ -95,9 +104,7 @@ var MainView = View.extend({
         }
 
         // Action for each frame
-        Utils.forEach(this.world.seeds, function(seed) {
-            seed.grow();
-        });
+        this.world.grow();
         this.world.optimise();
         this.world.collusionTest();
         this.world.draw();

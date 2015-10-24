@@ -66,8 +66,15 @@ var WorldView = View.extend({
         this.seeds.push(new FireworkSeed({_id: id, x: positionX, y: positionY, size: radius, colour: colour, ttl: ttl, velocity: velocity}));
     },
 
-    movePlayer: function(direction) {
-        this.player.move(direction);
+    setPlayerMovement: function(direction, toggle) {
+        this.player.setMovement(direction, toggle);
+    },
+
+    grow: function() {
+        this.player.grow();
+        Utils.forEach(this.seeds, function(seed) {
+            seed.grow();
+        });
     },
 
     optimise: function() {
