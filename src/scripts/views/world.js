@@ -22,6 +22,7 @@ var WorldView = View.extend({
         width: 'number',
         height: 'number',
         canvasContext: 'object',
+        duration: ['number', true, 0],
         seeds: ['array', true, function() { return []; }],
         player: 'object',
     },
@@ -71,6 +72,7 @@ var WorldView = View.extend({
     },
 
     grow: function() {
+        this.duration ++;
         this.player.grow();
         Utils.forEach(this.seeds, function(seed) {
             seed.grow();

@@ -27,7 +27,7 @@ var Utils = {
 
     // Game Control ----------------
 
-    GetInputDirection: function(keyCode) {
+    GetInput: function(keyCode) {
         if(keyCode == 38 || keyCode == 87) {
             return 'up';
         } else if (keyCode == 40 || keyCode == 83) {
@@ -36,6 +36,8 @@ var Utils = {
             return 'left';
         } else if (keyCode == 39 || keyCode == 68) {
             return 'right';
+        } else if (keyCode == 80) {
+            return 'pause';
         } else {
             return undefined;
         }

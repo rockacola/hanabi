@@ -31,6 +31,8 @@ var Player = State.extend({
         isMovingDown:  ['boolean', true, false],
         isMovingLeft:  ['boolean', true, false],
         isMovingRight:  ['boolean', true, false],
+
+        crashTime: 'number',
     },
 
     derived: {
@@ -38,6 +40,12 @@ var Player = State.extend({
             deps: ['PLAYER_SIZE'],
             fn: function() {
                 return this.PLAYER_SIZE;
+            }
+        },
+        isAlive: {
+            deps: ['crashTime'],
+            fn: function() {
+                return (!Utils.IsNullOrUndefinedOrEmpty(this.crashTime) && this.crashTime > 0);
             }
         }
     },
@@ -123,6 +131,7 @@ var Player = State.extend({
     },
 
     crash: function() {
+        this.crashTime = 999;
         this.colour = 'red';
     }
 

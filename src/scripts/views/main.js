@@ -23,16 +23,32 @@ var MainView = View.extend({
         frameCount: ['number', true, 0],
         nextActionFrame: ['number', true, 0],
         world: 'object',
+        gameTime: ['number', true, 0],
+        isPaused: ['boolean', true, false],
     },
 
     derived: {
+        statusDescription: {
+            deps: ['frameCount'],
+            fn: function() {
+                var text = 'running';
+                if(this.isPaused) {
+                    text = 'paused';
+                }
+                return text;
+            }
+        }
     },
 
     bindings: {
-        'frameCount': {
+        'gameTime': {
             type: 'text',
-            hook: 'frame-count'
+            hook: 'game-time'
         },
+        'statusDescription': {
+            type: 'text',
+            hook: 'status-description'
+        }
     },
 
     events: {
@@ -57,20 +73,11 @@ var MainView = View.extend({
     // Event Handlers ----------------
 
     _userKeydownHandler: function(e) {
-        var direction = Utils.GetInputDirection(e.keyCode);
-        //log('_userKeydownHandler direction:', direction);
-        if(direction !== undefined) {
-            e.preventDefault();
-            this.world.setPlayerMovement(direction, true);
-        }
+        this._performUserCommand(e);
     },
 
     _userKeyupHandler: function(e) {
-        var direction = Utils.GetInputDirection(e.keyCode);
-        //log('_userKeyupHandler direction:', direction);
-        if(direction !== undefined) {
-            this.world.setPlayerMovement(direction, false);
-        }
+        this._performUserCommand(e);
     },
 
     // Private Methods ----------------
@@ -95,26 +102,44 @@ var MainView = View.extend({
     },
 
     _incrementFrameCountAction: function() {
-        if(this.frameCount >= this.nextActionFrame) { //NOTE: Notice that this is not using == to capture frameskip (which should not have happen anyway)
+        if(!this.isPaused) {
+            if(this.frameCount >= this.nextActionFrame) { //NOTE: Notice that this is not using == to capture frameskip (which should not have happen anyway)
+                // Please a firework object onto world
+                this._addFirework();
 
-            // Please a firework object onto world
-            this._addFirework();
+                this.nextActionFrame = this.frameCount + Utils.random(60, 300, false); //TODO: this doesn't work with pause
+                log('action frame:', this.frameCount, 'next action frame:', this.nextActionFrame);
+            }
 
-            this.nextActionFrame = this.frameCount + Utils.random(60, 300, false);
-            log('action frame:', this.frameCount, 'next action frame:', this.nextActionFrame);
+            // Action for each frame
+            this.gameTime++;
+            this.world.grow();
+            this.world.optimise();
+            this.world.collusionTest();
+            this.world.draw();
         }
-
-        // Action for each frame
-        this.world.grow();
-        this.world.optimise();
-        this.world.collusionTest();
-        this.world.draw();
     },
 
     _addFirework: function() {
         var fireworkId = this.frameCount;
         this.world.addRandomFirework(fireworkId);
         //log('there are [', this.world.seeds.length, '] seeds in the world');
+    },
+
+    _performUserCommand: function(e) {
+        var command = Utils.GetInput(e.keyCode);
+        if(command !== undefined) {
+            if(e.type == 'keydown') {
+                e.preventDefault();
+                if(command == 'pause') {
+                    this.isPaused = !this.isPaused;
+                } else {
+                    this.world.setPlayerMovement(command, true);
+                }
+            } else if(e.type == 'keyup') {
+                this.world.setPlayerMovement(command, false);
+            }
+        }
     },
 
     // Public Methods ----------------

@@ -42,9 +42,8 @@ HTML5 Game
 ---
 
 ### Todo List
-* clean up npm packages
+
 * refactor model naming in a way to support fireworks type and level
-* use listen and trigger instead of procedure
 
 * add touch drag support
 
@@ -53,6 +52,14 @@ HTML5 Game
 * add new firework seed warning visual
 * seeded random number
 
+* HTML showing more info: current state
+* add game start mechanism
+
+* use image spirit for player instead of a circle
+* tweak collusion torrence
+* has near collusion visual indication
+
+* set proper game level(s)
 
 ### Roadmaps
 * TBA

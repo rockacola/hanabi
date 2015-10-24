@@ -19,6 +19,8 @@ var FireworkFlare = State.extend({
 
     props: {
         parent: 'object',
+        x: 'number',
+        y: 'number',
         angleDegrees: 'number',
     },
 
@@ -27,20 +29,6 @@ var FireworkFlare = State.extend({
             deps: ['angleDegrees'],
             fn: function() {
                 return Utils.GetRadians(this.angleDegrees);
-            }
-        },
-        x: { //TODO: optimise this
-            cache: false,
-            //deps: ['parent.x', 'parent.age'],
-            fn: function() {
-                return (this.parent.velocity * Math.cos(this.angleRadians) * this.parent.age) + this.parent.x;
-            }
-        },
-        y: { //TODO: optimise this
-            cache: false,
-            //deps: ['parent.y', 'parent.age'],
-            fn: function() {
-                return (this.parent.velocity * Math.sin(this.angleRadians) * this.parent.age) + this.parent.y;
             }
         },
     },
@@ -59,9 +47,22 @@ var FireworkFlare = State.extend({
 
     initialize: function() {
         //log('initialize()');
+
+        // Init
+        this.x = this.parent.x;
+        this.y = this.parent.y;
+
+        // Bindings
+        this.listenTo(this.parent, 'change:age', this._parentAgeChangeHandler.bind(this));
     },
 
     // Event Handlers ----------------
+
+    _parentAgeChangeHandler: function() {
+        //log('_parentAgeChangeHandler. e:', e, 'this:', this);
+        this.x = (this.parent.velocity * Math.cos(this.angleRadians) * this.parent.age) + this.parent.x;
+        this.y = (this.parent.velocity * Math.sin(this.angleRadians) * this.parent.age) + this.parent.y;
+    },
 
     // Private Methods ----------------
 
