@@ -45,7 +45,7 @@ var Player = State.extend({
         isAlive: {
             deps: ['crashTime'],
             fn: function() {
-                return (!Utils.IsNullOrUndefinedOrEmpty(this.crashTime) && this.crashTime > 0);
+                return (this.crashTime === undefined);
             }
         }
     },
@@ -63,7 +63,7 @@ var Player = State.extend({
     },
 
     initialize: function() {
-        log('initialize()');
+        //log('initialize() crashTime:', this.crashTime);
     },
 
     // Event Handlers ----------------
@@ -130,8 +130,10 @@ var Player = State.extend({
         context.fill();
     },
 
-    crash: function() {
-        this.crashTime = 999;
+    crash: function(gameTime) {
+        if(this.crashTime === undefined) { //NOTE: Only writing it on the first crash
+            this.crashTime = gameTime;
+        }
         this.colour = 'red';
     }
 

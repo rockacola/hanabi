@@ -85,11 +85,11 @@ var WorldView = View.extend({
         });
     },
 
-    collusionTest: function() {
+    collusionTest: function(gameTime) {
         var _this = this;
         Utils.forEach(this.seeds, function(seed) {
             if(seed.isCollided(_this.player)) {
-                _this.player.crash();
+                _this.player.crash(gameTime);
             }
         });
     },

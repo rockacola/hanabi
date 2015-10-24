@@ -34,6 +34,10 @@ var MainView = View.extend({
                 var text = 'running';
                 if(this.isPaused) {
                     text = 'paused';
+                } else if (this.world !== undefined) {
+                    if(!this.world.player.isAlive) {
+                        text = 'game over. finished at: ' + this.world.player.crashTime;
+                    }
                 }
                 return text;
             }
@@ -115,7 +119,7 @@ var MainView = View.extend({
             this.gameTime++;
             this.world.grow();
             this.world.optimise();
-            this.world.collusionTest();
+            this.world.collusionTest(this.gameTime);
             this.world.draw();
         }
     },
