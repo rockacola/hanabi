@@ -26,7 +26,7 @@ var MainView = View.extend({
         isGamePaused: ['boolean', true, false],
         isGameStarted: ['boolean', true, false],
         gameOverTime: 'number',
-        nextActionGameTime: ['number', true, 180],
+        nextActionGameTime: ['number', true, 120],
 
         attackType: ['string', true, 'peony'],
         attackLevel: ['number', true, 1],
@@ -152,7 +152,7 @@ var MainView = View.extend({
     },
 
     _setNextActionGameTime: function() {
-        this.nextActionGameTime = this.gameClock + 120; //TODO: introduce acceleration
+        this.nextActionGameTime = this.gameClock + 90; //TODO: introduce acceleration
     },
 
     _performUserCommand: function(e) {

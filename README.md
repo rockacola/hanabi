@@ -46,8 +46,6 @@ HTML5 Game
 
 ### Todo List
 
-* add new firework seed warning visual
-
 * set proper game level(s)
 * add touch drag support
 * add fades off effect
@@ -58,6 +56,7 @@ HTML5 Game
 * display time in seconds instead of frames
 * better algorithm on where to generate firework seed
 * seeded random number
+* tweak rendering order
 
 ### Roadmaps
 * TBA

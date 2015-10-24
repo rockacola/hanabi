@@ -21,7 +21,7 @@ var WorldView = View.extend({
     props: {
         PLAYER_VELOCITY: ['number', true, 3],
         PLAYER_SIZE: ['number', true, 12],
-        COLLUSION_TOLERANCE: ['number', true, 0.2], // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
+        COLLUSION_TOLERANCE: ['number', true, 0.4], // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
 
         width: 'number',
         height: 'number',
@@ -100,13 +100,13 @@ var WorldView = View.extend({
         var _this = this;
         this.canvasContext.clearRect(0, 0, this.width, this.height);
 
-        this.player.draw(this.canvasContext);
-
         Utils.forEach(this.seeds, function(seed) {
             _this.canvasContext.save();
             seed.draw(_this.canvasContext);
             _this.canvasContext.restore();
         });
+
+        this.player.draw(this.canvasContext);
     },
 });
 
