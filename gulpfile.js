@@ -28,10 +28,10 @@ var plugins = require('gulp-load-plugins')({ // Load all dev dependencies in pac
  *  Task: Truncate and delete the entire destination folder
  *  --------------------------------------------------
  */
-gulp.task('clean', function(next) {
-    plugins.del([
+gulp.task('clean', function() {
+    return plugins.del([
         './dist/'
-    ], next);
+    ]);
 });
 
 
