@@ -19,6 +19,7 @@ var PeonyFlare = State.extend({
 
     props: {
         parent: 'object',
+        layer: 'number',
         x: 'number',
         y: 'number',
         angleDegrees: 'number',
@@ -29,6 +30,20 @@ var PeonyFlare = State.extend({
             deps: ['angleDegrees'],
             fn: function() {
                 return Utils.GetRadians(this.angleDegrees);
+            }
+        },
+        accelerationFactor: {
+            cache: false,
+            fn: function() {
+                var layerOrder = (this.parent.layerCount - this.layer + 1);
+                return 1 - ((layerOrder-1) * 0.15);
+            }
+        },
+        speed: {
+            deps: ['accelerationFactor'],
+            cache: false,
+            fn: function() {
+                return this.parent.velocity * this.accelerationFactor;
             }
         },
     },
@@ -59,9 +74,11 @@ var PeonyFlare = State.extend({
     // Event Handlers ----------------
 
     _parentAgeChangeHandler: function() {
-        //log('_parentAgeChangeHandler. e:', e, 'this:', this);
-        this.x = (this.parent.velocity * Math.cos(this.angleRadians) * this.parent.age) + this.parent.x;
-        this.y = (this.parent.velocity * Math.sin(this.angleRadians) * this.parent.age) + this.parent.y;
+        if(!this.parent.isPreExisting) {
+            //log('seed ID:', this.parent._id, 'layerCount:', this.layerCount, 'accFactor:', this.accelerationFactor);
+            this.x = (this.speed * Math.cos(this.angleRadians) * this.parent.age) + this.parent.x;
+            this.y = (this.speed * Math.sin(this.angleRadians) * this.parent.age) + this.parent.y;
+        }
     },
 
     // Private Methods ----------------
@@ -86,8 +103,6 @@ var PeonyFlare = State.extend({
             //context.globalAlpha = this.parent.alpha;
             context.fillStyle = this.parent.colour;
             context.fill();
-            //log('draw. x:', this.x, 'y:', this.y, 'angleDegrees:', this.angleDegrees, 'angleRadians:', this.angleRadians);
-
         }
     },
 

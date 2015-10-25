@@ -45,7 +45,17 @@ var PeonySeed = State.extend({
         ttl: { // in frame count
             deps: ['level'],
             fn: function() {
-                return 120;
+                if(this.level <= 2) {
+                    return 120;
+                } else {
+                    return 60 * this.level;
+                }
+            }
+        },
+        layerCount: {
+            deps: ['level'],
+            fn: function() {
+                return 2 * this.level;
             }
         },
         velocity: {
@@ -95,11 +105,13 @@ var PeonySeed = State.extend({
         this._setAge();
 
         // Bootstrap
-        for(var i=0; i<this.flareCount; i++) {
-            var angle = (360 / this.flareCount) * (i);
-            this.flares.push(new PeonyFlare({ parent: this, angleDegrees: angle }));
+        for(var i=1; i<=this.layerCount; i++) {
+            for(var j=0; j<this.flareCount; j++) {
+                var angle = (360 / this.flareCount) * (j);
+                this.flares.push(new PeonyFlare({ parent: this, layer: i, angleDegrees: angle }));
+            }
         }
-        //log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'flares:', this.flares);
+        //log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'level:', this.level, 'layerCount:', this.layerCount);
     },
 
     // Event Handlers ----------------

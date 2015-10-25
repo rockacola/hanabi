@@ -141,12 +141,13 @@ var MainView = View.extend({
         if(!this.isGamePaused) {
 
             if(this.levelClock === 0) { // Level 1
-                this.nextActionGameTime = this.LEVEL_FIRST_WAVE;
+                //this.nextActionGameTime = this.LEVEL_FIRST_WAVE;
+                this.nextActionGameTime = 120;
             } else if(this.levelClock == this.LEVEL_DURATION) { // Next level
-                log('NEXT LEVEL!!!');
                 this.levelClock = 0; //TODO: should this be -1 instead?
                 this.attackLevel++;
                 this.nextActionGameTime = this.LEVEL_FIRST_WAVE;
+                log('NEXT LEVEL: ', this.attackLevel);
             } else if(this.levelClock >= this.nextActionGameTime) {
                 this._setNextActionGameTime();
                 this._addAttack();
