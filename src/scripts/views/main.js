@@ -22,6 +22,8 @@ var MainView = View.extend({
         LEVEL_DURATION: ['number', true, function() { return 60*90; }], // Time length of each level
         LEVEL_FIRST_WAVE: ['number', true, function() { return 60*5; }], // Waiting time before the 1st wave starts in a new level
 
+        version: 'string',
+
         frameCount: ['number', true, 0],
         world: 'object',
         gameClock: ['number', true, 0],
@@ -71,9 +73,21 @@ var MainView = View.extend({
     },
 
     bindings: {
-        "gameClock": {
+        'version': {
+            type: 'text',
+            hook: 'version'
+        },
+        'attackType': {
+            type: 'text',
+            hook: 'level-type'
+        },
+        'gameClock': {
             type: 'text',
             hook: 'game-time'
+        },
+        'attackLevel': {
+            type: 'text',
+            hook: 'game-level'
         },
         'statusDescription': {
             type: 'text',
@@ -94,6 +108,7 @@ var MainView = View.extend({
         // Init setup
         this._toggleDebugMode(App.isDebug); //TODO: have this triggered in a 'more global' level
         this._incrementFrameCount();
+        this.version = App.version;
 
         // Bindings
         document.addEventListener('keydown', this._userKeydownHandler.bind(this));

@@ -46,12 +46,10 @@ HTML5 Game
 
 ### Todo List
 
-* set proper game level(s)
 * add touch drag support
 * add fades off effect
 * use image spirit for player instead of a circle
 * has near collusion visual indication
-* tweak page and canvas colours
 * prevent player from going outside the wall
 
 * display time in seconds instead of frames

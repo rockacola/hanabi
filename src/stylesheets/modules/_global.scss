@@ -11,6 +11,8 @@ html {
 }
 
 body {
+    background-color: #222;
+    color: #acacac;
 }
 
 /*
@@ -21,7 +23,7 @@ body {
 .outline {
     overflow: hidden; //NOTE: Perhaps the canvas is causing some sort of overflow that will always have a vertical scrollbar.
     .dashboard {
-        border: solid 1px rgba(black, 0.2);
+        border: solid 1px rgba(white, 0.2);
         box-sizing: border-box;
         width: 800px;
         margin: 20px auto 0;

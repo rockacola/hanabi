@@ -18,7 +18,7 @@ var PeonyFlare = require('./peony-flare');
 var PeonySeed = State.extend({
 
     props: {
-        ATTACK_INDICATOR_SIZE: ['number', true, 12],
+        ATTACK_INDICATOR_SIZE: ['number', true, 16],
 
         _id: 'number',
         parent: 'object',
@@ -39,7 +39,7 @@ var PeonySeed = State.extend({
         colour: {
             deps: ['level'],
             fn: function() {
-                return 'green';
+                return '#ffd700';
             }
         },
         ttl: { // in frame count
@@ -144,7 +144,7 @@ var PeonySeed = State.extend({
         if(this.isPreExisting) {
             context.beginPath();
             context.arc(this.x, this.y, this.ATTACK_INDICATOR_SIZE, 0, 2*Math.PI, false);
-            context.fillStyle = 'pink';
+            context.fillStyle = '#acacac';
             context.fill();
         } else {
             Utils.forEach(this.flares, function(flare) {

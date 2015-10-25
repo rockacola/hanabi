@@ -19,7 +19,7 @@ var Player = State.extend({
 
     props: {
         parent: 'object',
-        colour:  ['string', true, 'blue'],
+        colour:  ['string', true, 'white'],
         x: ['number', true, 0],
         y: ['number', true, 0],
         size: 'number',
