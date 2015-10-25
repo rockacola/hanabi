@@ -100,13 +100,25 @@ var WorldView = View.extend({
         var _this = this;
         this.canvasContext.clearRect(0, 0, this.width, this.height);
 
+        // Render pre-existing seeds first
         Utils.forEach(this.seeds, function(seed) {
-            _this.canvasContext.save();
-            seed.draw(_this.canvasContext);
-            _this.canvasContext.restore();
+            if(seed.isPreExisting) {
+                _this.canvasContext.save();
+                seed.draw(_this.canvasContext);
+                _this.canvasContext.restore();
+            }
         });
 
         this.player.draw(this.canvasContext);
+
+        // Reiterate and check for existing seeds this time
+        Utils.forEach(this.seeds, function(seed) {
+            if(!seed.isPreExisting) {
+                _this.canvasContext.save();
+                seed.draw(_this.canvasContext);
+                _this.canvasContext.restore();
+            }
+        });
     },
 });
 

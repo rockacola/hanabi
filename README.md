@@ -52,11 +52,11 @@ HTML5 Game
 * use image spirit for player instead of a circle
 * has near collusion visual indication
 * tweak page and canvas colours
+* prevent player from going outside the wall
 
 * display time in seconds instead of frames
 * better algorithm on where to generate firework seed
 * seeded random number
-* tweak rendering order
 
 ### Roadmaps
 * TBA

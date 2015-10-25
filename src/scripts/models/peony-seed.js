@@ -33,7 +33,7 @@ var PeonySeed = State.extend({
         size: {
             deps: ['level'],
             fn: function() {
-                return 8;
+                return 6;
             }
         },
         colour: {
@@ -51,13 +51,17 @@ var PeonySeed = State.extend({
         velocity: {
             deps: ['level'],
             fn: function() {
-                return 2;
+                return 2 + (1 * (this.level-1));
             }
         },
         flareCount: {
             deps: ['level'],
             fn: function() {
-                return 12;
+                if(this.level == 1) {
+                    return 8;
+                } else {
+                    return 12;
+                }
             }
         },
         isPreExisting: {

@@ -19,14 +19,17 @@ var WorldView = require('./world');
 var MainView = View.extend({
 
     props: {
-        frameCount: ['number', true, 0],
+        LEVEL_DURATION: ['number', true, function() { return 60*90; }], // Time length of each level
+        LEVEL_FIRST_WAVE: ['number', true, function() { return 60*5; }], // Waiting time before the 1st wave starts in a new level
 
+        frameCount: ['number', true, 0],
         world: 'object',
         gameClock: ['number', true, 0],
+        levelClock: ['number', true, 0],
         isGamePaused: ['boolean', true, false],
         isGameStarted: ['boolean', true, false],
         gameOverTime: 'number',
-        nextActionGameTime: ['number', true, 120],
+        nextActionGameTime: ['number', true, 0],
 
         attackType: ['string', true, 'peony'],
         attackLevel: ['number', true, 1],
@@ -58,7 +61,13 @@ var MainView = View.extend({
                 }
                 return text;
             }
-        }
+        },
+        gameSeconds: { // game seconds in 1 decimal pont
+            deps: ['gameClock'],
+            fn: function() {
+                return Math.floor(this.gameClock / 60 * 10) / 10;
+            }
+        },
     },
 
     bindings: {
@@ -130,15 +139,24 @@ var MainView = View.extend({
 
     _incrementFrameCountAction: function() {
         if(!this.isGamePaused) {
-            if(this.gameClock >= this.nextActionGameTime) {
+
+            if(this.levelClock === 0) { // Level 1
+                this.nextActionGameTime = this.LEVEL_FIRST_WAVE;
+            } else if(this.levelClock == this.LEVEL_DURATION) { // Next level
+                log('NEXT LEVEL!!!');
+                this.levelClock = 0; //TODO: should this be -1 instead?
+                this.attackLevel++;
+                this.nextActionGameTime = this.LEVEL_FIRST_WAVE;
+            } else if(this.levelClock >= this.nextActionGameTime) {
                 this._setNextActionGameTime();
                 this._addAttack();
-                log('frame:', this.frameCount, 'game time:', this.gameClock, 'next action:', this.nextActionGameTime);
+                log('frame:', this.frameCount, 'game time:', this.gameClock, ' (', this.gameSeconds, 's)', 'level time:', this.levelClock, 'next action:', this.nextActionGameTime);
             }
 
             // Action for each frame
             if(this.isGameOn) {
                 this.gameClock++;
+                this.levelClock++;
                 this.world.grow();
                 this.world.optimise();
                 this.world.collusionTest(this.gameClock);
@@ -153,13 +171,12 @@ var MainView = View.extend({
 
     _setNextActionGameTime: function() {
         var baseInterval = 180;
-        var minInterval = 30;
+        var minInterval = 20;
         var accelerationRate = 3;
-        var nextInterval = baseInterval - Math.round(this.gameClock / 60 * accelerationRate);
+        var nextInterval = baseInterval - Math.round(this.levelClock / 60 * accelerationRate);
         nextInterval = (nextInterval < minInterval) ? minInterval : nextInterval;
         log('nextInterval:', nextInterval);
-
-        this.nextActionGameTime = this.gameClock + nextInterval;
+        this.nextActionGameTime = this.levelClock + nextInterval;
     },
 
     _performUserCommand: function(e) {
