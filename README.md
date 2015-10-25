@@ -47,7 +47,6 @@ HTML5 Game
 ### Todo List
 
 * add touch drag support
-* add fades off effect
 * use image spirit for player instead of a circle
 * has near collusion visual indication
 * prevent player from going outside the wall
@@ -57,4 +56,5 @@ HTML5 Game
 * seeded random number
 
 ### Roadmaps
-* TBA
+* Attack type: laser beam
+

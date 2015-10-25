@@ -100,7 +100,9 @@ var PeonyFlare = State.extend({
         if(!this.parent.isPreExisting) {
             context.beginPath();
             context.arc(this.x, this.y, this.parent.size, 0, 2*Math.PI, false);
-            //context.globalAlpha = this.parent.alpha;
+            if(this.parent.isDecaying) {
+                context.globalAlpha = 0.8;
+            }
             context.fillStyle = this.parent.colour;
             context.fill();
         }

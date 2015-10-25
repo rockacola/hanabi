@@ -86,6 +86,18 @@ var PeonySeed = State.extend({
                 return (this.age <= this.ttl);
             }
         },
+        isEmerging: {
+            deps: ['age'],
+            fn: function() {
+                return (this.age > -30);
+            }
+        },
+        isDecaying: {
+            deps: ['age', 'ttl'],
+            fn: function() {
+                return (this.age > this.ttl - 30);
+            }
+        },
     },
 
     collections: {
@@ -144,6 +156,9 @@ var PeonySeed = State.extend({
         if(this.isPreExisting) {
             context.beginPath();
             context.arc(this.x, this.y, this.ATTACK_INDICATOR_SIZE, 0, 2*Math.PI, false);
+            if(!this.isEmerging) {
+                context.globalAlpha = 0.8;
+            }
             context.fillStyle = '#acacac';
             context.fill();
         } else {
