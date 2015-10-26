@@ -24,6 +24,7 @@ var Player = State.extend({
         y: ['number', true, 0],
         size: 'number',
         velocity: 'number',
+        isCollided: ['boolean', true, false],
 
         isMovingUp:  ['boolean', true, false],
         isMovingDown:  ['boolean', true, false],
@@ -111,10 +112,11 @@ var Player = State.extend({
         context.arc(this.x, this.y, this.size, 0, 2*Math.PI, false);
         context.fillStyle = this.colour;
         context.fill();
+
     },
 
     collusion: function(gameTime) {
-        this.colour = 'red';
+        this.colour = '#5a5a5a';
         this.trigger('collusion');
     }
 

@@ -39,7 +39,7 @@ var PeonySeed = State.extend({
         colour: {
             deps: ['level'],
             fn: function() {
-                return '#ffd700';
+                return '#dd8801';
             }
         },
         ttl: { // in frame count
@@ -64,6 +64,19 @@ var PeonySeed = State.extend({
                 return 2 + (1 * (this.level-1));
             }
         },
+        alpha: {
+            deps: ['age', 'ttl'],
+            fn: function() {
+                if(this.age < 0) { // Pre-existing
+                    return 1 + (this.age/160);
+                } else if (this.age > this.ttl - 30) { // Decaying
+                    var inverseTimeLeft = 30 - (this.ttl - this.age);
+                    return 1 - (0.5 * inverseTimeLeft/30);
+                } else { // Default
+                    return 1;
+                }
+            }
+        },
         flareCount: {
             deps: ['level'],
             fn: function() {
@@ -84,18 +97,6 @@ var PeonySeed = State.extend({
             deps: ['age', 'ttl'],
             fn: function() {
                 return (this.age <= this.ttl);
-            }
-        },
-        isEmerging: {
-            deps: ['age'],
-            fn: function() {
-                return (this.age > -30);
-            }
-        },
-        isDecaying: {
-            deps: ['age', 'ttl'],
-            fn: function() {
-                return (this.age > this.ttl - 30);
             }
         },
     },
@@ -156,10 +157,10 @@ var PeonySeed = State.extend({
         if(this.isPreExisting) {
             context.beginPath();
             context.arc(this.x, this.y, this.ATTACK_INDICATOR_SIZE, 0, 2*Math.PI, false);
-            if(!this.isEmerging) {
-                context.globalAlpha = 0.8;
-            }
-            context.fillStyle = '#acacac';
+            //context.globalAlpha = 0.6;
+            //context.fillStyle = '#e1855a';
+            context.globalAlpha = this.alpha;
+            context.fillStyle = this.colour;
             context.fill();
         } else {
             Utils.forEach(this.flares, function(flare) {

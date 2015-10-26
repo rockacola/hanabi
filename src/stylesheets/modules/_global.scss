@@ -11,8 +11,9 @@ html {
 }
 
 body {
-    background-color: #222;
-    color: #acacac;
+    background-color: #061739;
+    color: #b3d4fc;
+    font-family: verdana;
 }
 
 /*
@@ -22,11 +23,65 @@ body {
 
 .outline {
     overflow: hidden; //NOTE: Perhaps the canvas is causing some sort of overflow that will always have a vertical scrollbar.
-    .dashboard {
-        border: solid 1px rgba(white, 0.2);
+
+    .introduction {
+        //border: solid 1px rgba(#b3d4fc, 0.6);
         box-sizing: border-box;
         width: 800px;
         margin: 20px auto 0;
         padding: 10px 20px;
+
+        .title {
+            small {
+                font-size: 70%;
+                font-weight: normal;
+            }
+        }
+    }
+
+    .dashboard {
+        //background-color: rgba(white, 0.1);
+
+        .item {
+            display: inline-block;
+            position: relative;
+            width: 32%;
+            background-color: rgba(white, 0.2);
+            padding: 10px 6px;
+            margin-bottom: 6px;
+
+            .label {
+                position: absolute;
+                top: 3px;
+                left: 9px;
+                color: rgba(#b3d4fc, 0.6);
+            }
+            .value {
+                font-size: 200%;
+                text-align: center;
+            }
+
+            &--status {
+                width: 97.5%;
+                .value {
+                    font-size: 100%;
+                }
+            }
+
+            &--progress {
+                width: 97.5%;
+                .fill {
+                    background-color: rgba(#dd8801, 0.3);
+                    position: absolute;
+                    height: 100%;
+                    width: 0%;
+                    top: 0;
+                    left: 0;
+                }
+                .value {
+                    font-size: 100%;
+                }
+            }
+        }
     }
 }

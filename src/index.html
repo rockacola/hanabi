@@ -11,34 +11,33 @@
 </head>
 <body>
     <div class="outline" data-hook="outline">
-        <div class="dashboard">
+        <div class="introduction">
             <div class="caption">
-                <h3>Hanabi</h3>
-                <p>2D HTML5 browser game. More description to come...</p>
+                <h2 class="title">Hanabi <small>v<span data-hook="version"></span></small></h2>
+                <p>Pilot your spacecraft equipped with no weapons, journey out to space of extreme dangerous putting your evasion skill to the test.</p>
             </div>
-            <div class="info">
-                <ul>
-                    <li class="version">
-                        <span class="label">Version:</span>
-                        <span class="value" data-hook="version"></span>
-                    </li>
-                    <li class="level-type">
-                        <span class="label">Type:</span>
-                        <span class="value" data-hook="level-type"></span>
-                    </li>
-                    <li class="time">
-                        <span class="label">Time:</span>
-                        <span class="value" data-hook="game-time"></span>
-                    </li>
-                    <li class="level">
-                        <span class="label">Level:</span>
-                        <span class="value" data-hook="game-level"></span>
-                    </li>
-                    <li class="status">
-                        <span class="label">Status:</span>
-                        <span class="value" data-hook="status-description"></span>
-                    </li>
-                </ul>
+            <div class="dashboard">
+                <div class="item">
+                    <div class="label">Time</div>
+                    <div class="value" data-hook="game-time"></div>
+                </div>
+                <div class="item">
+                    <div class="label">Current Level</div>
+                    <div class="value" data-hook="game-level"></div>
+                </div>
+                <div class="item">
+                    <div class="label">Level Type</div>
+                    <div class="value" data-hook="level-type"></div>
+                </div>
+                <div class="item item--status">
+                    <div class="label">Status</div>
+                    <div class="value" data-hook="status-description"></div>
+                </div>
+                <div class="item item--progress">
+                    <div class="fill" data-hook="level-progress-fill"></div>
+                    <div class="label">Progress</div>
+                    <div class="value" data-hook="level-progress-label"></div>
+                </div>
             </div>
         </div>
         <canvas id="world" data-hook="drawing-board"></canvas>

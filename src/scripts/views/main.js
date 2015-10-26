@@ -20,7 +20,7 @@ var MainView = View.extend({
 
     props: {
         LEVEL_DURATION: ['number', true, function() { return 60*90; }], // Time length of each level
-        LEVEL_FIRST_WAVE: ['number', true, function() { return 60*5; }], // Waiting time before the 1st wave starts in a new level
+        LEVEL_FIRST_WAVE: ['number', true, function() { return 60*6; }], // Waiting time before the 1st wave starts in a new level
 
         version: 'string',
 
@@ -53,13 +53,13 @@ var MainView = View.extend({
         statusDescription: {
             deps: ['frameCount'],
             fn: function() {
-                var text = 'running, press [p] to pause.';
+                var text = 'Running, press [P] to pause.';
                 if(!this.isGameStarted) {
-                    text = 'press [space] to start the game, [p] to pause.';
+                    text = 'Press [SPACE] to start the game, [P] to pause.';
                 } else if(this.isGameOver) {
-                    text = 'game over on: ' + this.gameOverTime + '. Refresh page to restart';
+                    text = 'Game over. Refresh page to restart';
                 } else if(this.isGamePaused) {
-                    text = 'paused, press [p] to resume.';
+                    text = 'Paused, press [P] to resume.';
                 }
                 return text;
             }
@@ -68,6 +68,24 @@ var MainView = View.extend({
             deps: ['gameClock'],
             fn: function() {
                 return Math.floor(this.gameClock / 60 * 10) / 10;
+            }
+        },
+        levelProgress: {
+            deps: ['levelClock'],
+            fn: function() {
+                return (this.levelClock / this.LEVEL_DURATION);
+            }
+        },
+        levelProgressLabel: {
+            deps: ['levelProgress'],
+            fn: function() {
+                return Math.floor(this.levelProgress * 100) + '%';
+            }
+        },
+        levelProgressX: {
+            deps: ['levelProgress'],
+            fn: function() {
+                return 'width: ' + Math.floor(this.levelProgress * 10000)/100 + '%;';
             }
         },
     },
@@ -92,7 +110,16 @@ var MainView = View.extend({
         'statusDescription': {
             type: 'text',
             hook: 'status-description'
-        }
+        },
+        'levelProgressLabel': {
+            type: 'text',
+            hook: 'level-progress-label'
+        },
+        'levelProgressX': {
+            type: 'attribute',
+            name: 'style',
+            hook: 'level-progress-fill'
+        },
     },
 
     events: {

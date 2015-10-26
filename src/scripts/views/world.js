@@ -109,7 +109,10 @@ var WorldView = View.extend({
             }
         });
 
+        // Render player
+        this.canvasContext.save();
         this.player.draw(this.canvasContext);
+        this.canvasContext.restore();
 
         // Reiterate and check for existing seeds this time
         Utils.forEach(this.seeds, function(seed) {
