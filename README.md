@@ -55,6 +55,16 @@ HTML5 Game
 * better algorithm on where to generate firework seed
 * seeded random number
 
+* mouse support
+* tweak peony flare deceleration
+* revise theming
+* add more descriptions, instructions
+* redesign 'dashboard' to show less text and more information
+* user controlled slow motion feature/mechanism
+* move game logics from main.js to setting file
+
+
 ### Roadmaps
 * Attack type: laser beam
-
+* SFX
+* Replay mechanism
