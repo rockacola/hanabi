@@ -20,8 +20,8 @@ var WorldView = View.extend({
 
     props: {
         PLAYER_VELOCITY: ['number', true, 3],
-        PLAYER_SIZE: ['number', true, 12],
-        COLLUSION_TOLERANCE: ['number', true, 0.5], // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
+        PLAYER_SIZE: ['number', true, 18],
+        COLLUSION_TOLERANCE: ['number', true, 0.55], // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
 
         width: 'number',
         height: 'number',
