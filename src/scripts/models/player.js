@@ -51,7 +51,7 @@ var Player = State.extend({
 
     initialize: function() {
         this.playerImage = new Image();
-        this.playerImage.src = '/images/spacecraft.png';
+        this.playerImage.src = '//rockacola.github.io/hanabi/images/spacecraft.png'; //TODO
     },
 
     // Event Handlers ----------------
