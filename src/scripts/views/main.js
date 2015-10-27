@@ -23,6 +23,8 @@ var MainView = View.extend({
         LEVEL_FIRST_WAVE: ['number', true, function() { return 60*6; }], // Waiting time before the 1st wave starts in a new level
 
         version: 'string',
+        playerImagePath: 'string',
+        playerActiveImagePath: 'string',
 
         frameCount: ['number', true, 0],
         world: 'object',
@@ -128,14 +130,17 @@ var MainView = View.extend({
     initialize: function() {
         log('initialize()');
 
+
         // Bootstrap
+        this.version = App.version;
+        this.playerImagePath = this.el.querySelector('.resources .player-image').src;
+        this.playerActiveImagePath = this.el.querySelector('.resources .player-active-image').src;
         this.world = new WorldView({ el: document.querySelector('[data-hook="drawing-board"]'), width: 800, height: 600 });
-        this.world.addPlayer();
+        this.world.addPlayer(this.playerImagePath, this.playerActiveImagePath);
 
         // Init setup
         this._toggleDebugMode(App.isDebug); //TODO: have this triggered in a 'more global' level
         this._incrementFrameCount();
-        this.version = App.version;
 
         // Bindings
         document.addEventListener('keydown', this._userKeydownHandler.bind(this));

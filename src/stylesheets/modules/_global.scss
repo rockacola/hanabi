@@ -84,4 +84,27 @@ body {
             }
         }
     }
+
+    .footer {
+        border-top: 1px solid rgba(white, 0.2);
+        width: 800px;
+        margin: 0 auto 20px auto;
+        padding-top: 10px;
+        text-align: center;
+        font-size: 80%;
+
+        a {
+            color: #b3d4fc;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            &:hover,
+            &:active {
+                color: rgba(#b3d4fc, 0.6);
+            }
+        }
+    }
+
+    .resources {
+        display: none;
+    }
 }

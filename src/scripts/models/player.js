@@ -24,17 +24,32 @@ var Player = State.extend({
         y: ['number', true, 0],
         size: 'number',
         velocity: 'number',
-        isCollided: ['boolean', true, false],
+        imagePath: 'string',
+        imageActivePath: 'string',
 
+        isCollided: ['boolean', true, false],
         isMovingUp:  ['boolean', true, false],
         isMovingDown:  ['boolean', true, false],
         isMovingLeft:  ['boolean', true, false],
         isMovingRight:  ['boolean', true, false],
 
         playerImage: 'object',
+        playerActiveImage: 'object',
     },
 
     derived: {
+        currentPlayerImage: {
+            deps: ['isMovingUp', 'isMovingDown', 'isMovingLeft', 'isMovingRight'],
+            fn: function() {
+                if(this.isMovingUp || this.isMovingDown || this.isMovingLeft || this.isMovingRight) {
+                    return this.playerActiveImage;
+                } else {
+                    return this.playerImage;
+                }
+            }
+        },
+
+
     },
 
     collections: {
@@ -51,7 +66,9 @@ var Player = State.extend({
 
     initialize: function() {
         this.playerImage = new Image();
-        this.playerImage.src = '//rockacola.github.io/hanabi/images/spacecraft.png'; //TODO
+        this.playerImage.src = this.imagePath;
+        this.playerActiveImage = new Image();
+        this.playerActiveImage.src = this.imageActivePath;
     },
 
     // Event Handlers ----------------
@@ -118,12 +135,10 @@ var Player = State.extend({
         context.fillStyle = this.colour;
         context.fill();
         context.globalAlpha = 1;
-        context.drawImage(this.playerImage, this.x-this.size, this.y-this.size, this.size*2, this.size*2);
-        //context.translate(this.size, this.size);
+        context.drawImage(this.currentPlayerImage, this.x-this.size, this.y-this.size, this.size*2, this.size*2);
     },
 
     collusion: function(gameTime) {
-        //this.colour = '#5a5a5a';
         this.colour = '#ff0000';
         this.trigger('collusion');
     },

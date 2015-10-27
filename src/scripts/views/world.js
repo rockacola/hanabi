@@ -20,7 +20,7 @@ var WorldView = View.extend({
 
     props: {
         PLAYER_VELOCITY: ['number', true, 3],
-        PLAYER_SIZE: ['number', true, 18],
+        PLAYER_SIZE: ['number', true, 20],
         COLLUSION_TOLERANCE: ['number', true, 0.55], // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
 
         width: 'number',
@@ -53,10 +53,10 @@ var WorldView = View.extend({
 
     // Public Methods ----------------
 
-    addPlayer: function() {
+    addPlayer: function(playerImagePath, playerActiveImagePath) {
         var positionX = this.width/2;
         var positionY = this.height/2;
-        this.player = new Player({ parent: this, x: positionX, y: positionY, size: this.PLAYER_SIZE, velocity: this.PLAYER_VELOCITY });
+        this.player = new Player({ parent: this, x: positionX, y: positionY, size: this.PLAYER_SIZE, velocity: this.PLAYER_VELOCITY, imagePath: playerImagePath, imageActivePath: playerActiveImagePath });
     },
 
     addAttack: function(designatedId, attackType, attackLevel) {
