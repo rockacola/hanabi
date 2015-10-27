@@ -19,7 +19,7 @@ var Utils = require('./base/utils');
 
 var TheInstance = window.App = window.App || {
 
-    version: '1.2.2', // Version of this application instance
+    version: '1.3.0', // Version of this application instance
     isDebug: false, // Whether the application is run in debug mode
     visitor: Utils.ua('UA-46848707-9'), // Specific Google analytic code for this app instance
 
