@@ -8,7 +8,7 @@
 //NOTE: Browser may needs to run "localStorage.debug=true" to have bows showing up in console.
 var log = require('bows')('App');
 var App = require('ampersand-app');
-var MainView = require('./views/main');
+var GameView = require('./views/game');
 var Utils = require('./base/utils');
 
 
@@ -27,8 +27,7 @@ var TheInstance = window.App = window.App || {
         var baseInstance = this;
 
         //-- View
-        baseInstance.view = new MainView({
-            model: baseInstance.site,
+        baseInstance.view = new GameView({
             el: document.querySelector('[data-hook="outline"]')
         });
 

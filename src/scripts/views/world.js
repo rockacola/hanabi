@@ -1,5 +1,5 @@
 //
-// Site / View / Main
+// Site / View / World
 //
 
 'use strict';

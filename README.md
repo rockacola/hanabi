@@ -30,7 +30,7 @@ HTML5 Game ([demo](http://rockacola.github.io/hanabi))
 * prevent player from going outside the wall
 * seeded random number
 * better algorithm on where to generate firework seed
-* move game logics from main.js to setting file
+* move game logics from game.js to setting file
 * usage of GA to track user's interactions
 
 ### Backburner

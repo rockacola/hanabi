@@ -1,5 +1,5 @@
 //
-// Grunt Config
+// Gulp Config
 //
 
 /*

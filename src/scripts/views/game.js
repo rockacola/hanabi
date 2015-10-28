@@ -1,11 +1,11 @@
 //
-// Site / View / Main
+// Site / View / Game
 //
 
 'use strict';
 
 // Dependencies
-var log = require('bows')('Main');
+var log = require('bows')('Game');
 var App = require('ampersand-app');
 var View = require('ampersand-view');
 var Utils = require('../base/utils');
@@ -16,7 +16,7 @@ var WorldView = require('./world');
 // View
 // --------------------------------------------------
 
-var MainView = View.extend({
+var GameView = View.extend({
 
     props: {
         LEVEL_DURATION: ['number', true, function() { return 60*90; }], // Time length of each level
@@ -254,4 +254,4 @@ var MainView = View.extend({
 // Exports
 // --------------------------------------------------
 
-module.exports = MainView;
+module.exports = GameView;
