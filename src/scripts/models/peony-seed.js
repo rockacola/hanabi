@@ -25,6 +25,7 @@ var PeonySeed = State.extend({
         x: 'number',
         y: 'number',
         level: 'number',
+        collusionTolerance: 'number',
         age: ['number', true, 0],
         flares: ['array', true, function() { return []; }],
     },
