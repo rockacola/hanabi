@@ -45,11 +45,7 @@ var PeonySeed = State.extend({
         ttl: { // in frame count
             deps: ['level'],
             fn: function() {
-                if(this.level <= 2) {
-                    return 120;
-                } else {
-                    return 60 * this.level;
-                }
+                return 90;
             }
         },
         layerCount: {

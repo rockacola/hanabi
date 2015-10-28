@@ -20,7 +20,7 @@ var WorldView = require('./world');
 var GameView = View.extend({
 
     props: {
-        LEVEL_DURATION: ['number', true, function() { return 60*90; }], // Time length of each level
+        LEVEL_DURATION: ['number', true, function() { return 60*80; }], // Time length of each level
         LEVEL_FIRST_WAVE: ['number', true, function() { return 60*6; }], // Waiting time before the 1st wave starts in a new level
 
         version: 'string',
@@ -224,8 +224,8 @@ var GameView = View.extend({
 
     _setNextActionGameTime: function() {
         var baseInterval = 180;
-        var minInterval = 20;
-        var accelerationRate = 3;
+        var minInterval = 30;
+        var accelerationRate = 2.5;
         var nextInterval = baseInterval - Math.round(this.levelClock / 60 * accelerationRate);
         nextInterval = (nextInterval < minInterval) ? minInterval : nextInterval;
         //log('nextInterval:', nextInterval);
