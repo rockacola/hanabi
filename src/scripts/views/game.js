@@ -22,11 +22,10 @@ var GameView = View.extend({
 
     props: {
         version: 'string',
-        playerImagePath: 'string',
-        playerActiveImagePath: 'string',
+        rng: 'object',
+        world: 'object',
 
         frameCount: ['number', true, 0],
-        world: 'object',
         gameClock: ['number', true, 0],
         levelClock: ['number', true, 0],
         isGamePaused: ['boolean', true, false],
@@ -36,8 +35,6 @@ var GameView = View.extend({
 
         attackType: ['string', true, 'peony'],
         attackLevel: ['number', true, 1],
-
-        rng: 'object',
     },
 
     derived: {
@@ -85,7 +82,7 @@ var GameView = View.extend({
                 return Math.floor(this.levelProgress * 100) + '%';
             }
         },
-        levelProgressX: {
+        levelProgressStyleValue: {
             deps: ['levelProgress'],
             fn: function() {
                 return 'width: ' + Math.floor(this.levelProgress * 10000)/100 + '%;';
@@ -118,7 +115,7 @@ var GameView = View.extend({
             type: 'text',
             hook: 'level-progress-label'
         },
-        'levelProgressX': {
+        'levelProgressStyleValue': {
             type: 'attribute',
             name: 'style',
             hook: 'level-progress-fill'
@@ -134,13 +131,18 @@ var GameView = View.extend({
         // Bootstrap
         this.version = App.version;
         this.rng = new Rng({ seed: GameSettings.global.randomSeed });
-        this.playerImagePath = this.el.querySelector('.resources .player-image').src;
-        this.playerActiveImagePath = this.el.querySelector('.resources .player-active-image').src;
-        this.world = new WorldView({ parent: this, el: document.querySelector('[data-hook="drawing-board"]'), width: GameSettings.global.worldWidth, height: GameSettings.global.worldHeight });
-        this.world.addPlayer(this.playerImagePath, this.playerActiveImagePath);
+        this.world = new WorldView({
+            parent: this, el: document.querySelector('[data-hook="drawing-board"]'),
+            settings: GameSettings.global,
+            width: GameSettings.global.worldWidth,
+            height: GameSettings.global.worldHeight
+        });
+        this.world.addPlayer(
+            this.el.querySelector('.resources .player-image').src,
+            this.el.querySelector('.resources .player-active-image').src
+        );
 
         // Init setup
-        this._toggleDebugMode(App.isDebug); //TODO: have this triggered in a 'more global' level
         this._incrementFrameCount();
 
         // Bindings
@@ -165,14 +167,6 @@ var GameView = View.extend({
     },
 
     // Private Methods ----------------
-
-    _toggleDebugMode: function(isDebug) { //TODO: migrate this to App.Util or similar
-        if(isDebug) {
-            document.body.classList.add('is-debug');
-        } else {
-            document.body.classList.remove('is-debug');
-        }
-    },
 
     _incrementFrameCount: function() {
         log('starting _incrementFrameCount');

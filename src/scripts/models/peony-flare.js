@@ -86,7 +86,7 @@ var PeonyFlare = State.extend({
     // Public Methods ----------------
 
     isCollided: function(player) {
-        var toleranceRatio = 1 - this.parent.parent.COLLUSION_TOLERANCE;
+        var toleranceRatio = 1 - this.parent.collusionTolerance;
         var distance = Math.sqrt(
             Math.pow((this.x - player.x), 2) +
             Math.pow((this.y - player.y), 2)

@@ -18,12 +18,12 @@ var GameSettings = {
         worldHeight: 600,
 
         levelLength: 60*80, // Time length of each level
-        firstLevelFirstWaveInterval: 120,
+        firstLevelFirstWaveInterval: 60*2,
         levelFirstWaveInterval: 60*6, // Waiting time before the 1st wave starts in a new level
 
-
-
-
+        playerSize: 20,
+        playerVelocity: 3,
+        collusionTolerance: 0.55, // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
     },
 
     GetSetting: function(attackType) {
