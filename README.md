@@ -26,21 +26,21 @@ HTML5 Game ([demo](http://rockacola.github.io/hanabi))
 * [Types of fireworks effects](http://www.fireworks.com/fireworks-university/fireworks-glossary/)
 
 ### Todo List
-
-* add touch drag support
 * has near collusion visual indication
 * prevent player from going outside the wall
-
-* display time in seconds instead of frames
-* better algorithm on where to generate firework seed
 * seeded random number
-
-* mouse support
-* tweak peony flare deceleration
-* user controlled slow motion feature/mechanism
+* better algorithm on where to generate firework seed
 * move game logics from main.js to setting file
+* usage of GA to track user's interactions
+
+### Backburner
+* add touch drag support
+* mouse support
+* display time in seconds instead of frames
+
 
 ### Roadmaps
 * Attack type: laser beam
 * SFX
 * Replay mechanism
+* user controlled slow motion feature/mechanism
