@@ -27,11 +27,10 @@ HTML5 Game ([demo](http://rockacola.github.io/hanabi))
 
 ### Todo List
 * provide a random seed by default
-* add setting object
 * has near collusion visual indication
 * prevent player from going outside the wall
-* better algorithm on where to generate firework seed
 * usage of GA to track user's interactions
+* further settings model for different attack types
 
 ### Backburner
 * add touch drag support

@@ -32,8 +32,8 @@ var Rng = State.extend({
     /**
      * Produces a random integer between `min` and `max` (inclusive).
      *
-     * @param {number} [min=0] The minimum possible value.
-     * @param {number} [max=1] The maximum possible value.
+     * @param {number} [min] The minimum possible value.
+     * @param {number} [max] The maximum possible value.
      * @returns {number} Returns the random number.
      */
     random: function(min, max) {
