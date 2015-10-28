@@ -114,6 +114,8 @@ var PeonySeed = State.extend({
     },
 
     initialize: function() {
+        log('initialize() x:', this.x, 'y:', this.y, 'level:', this.level);
+
         // Init
         this._setAge();
 

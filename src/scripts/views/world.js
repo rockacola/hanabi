@@ -10,6 +10,7 @@ var View = require('ampersand-view');
 var Utils = require('../base/utils');
 var PeonySeed = require('../models/peony-seed');
 var Player = require('../models/player');
+var Rng = require('../base/rng');
 
 
 
@@ -23,6 +24,7 @@ var WorldView = View.extend({
         PLAYER_SIZE: ['number', true, 20],
         COLLUSION_TOLERANCE: ['number', true, 0.55], // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
 
+        parent: 'object',
         width: 'number',
         height: 'number',
         canvasContext: 'object',
@@ -61,8 +63,8 @@ var WorldView = View.extend({
 
     addAttack: function(designatedId, attackType, attackLevel) {
         // Random properties
-        var positionX = Utils.random(0, this.width, false);
-        var positionY = Utils.random(0, this.height, false);
+        var positionX = this.parent.rng.random(0, this.width);
+        var positionY = this.parent.rng.random(0, this.height);
 
         if(attackType == 'peony') {
             this.seeds.push(new PeonySeed({ _id: designatedId, parent: this, x: positionX, y: positionY, level: attackLevel }));

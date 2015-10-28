@@ -4,16 +4,12 @@
   "private": true,
   "dependencies": {
     "ampersand-app": "^1.0.4",
-    "ampersand-collection": "^1.4.5",
-    "ampersand-events": "^1.1.1",
-    "ampersand-model": "^6.0.2",
-    "ampersand-router": "^3.0.2",
     "ampersand-state": "^4.5.6",
     "ampersand-view": "^9.0.0",
-    "ampersand-view-switcher": "^2.0.0",
     "bows": "^1.4.8",
     "lodash": "^3.10.1",
     "raf": "^3.1.0",
+    "seedrandom": "^2.4.2",
     "universal-analytics": "^0.3.9"
   },
   "devDependencies": {

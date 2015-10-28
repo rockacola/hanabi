@@ -26,11 +26,10 @@ HTML5 Game ([demo](http://rockacola.github.io/hanabi))
 * [Types of fireworks effects](http://www.fireworks.com/fireworks-university/fireworks-glossary/)
 
 ### Todo List
+* add setting object
 * has near collusion visual indication
 * prevent player from going outside the wall
-* seeded random number
 * better algorithm on where to generate firework seed
-* move game logics from game.js to setting file
 * usage of GA to track user's interactions
 
 ### Backburner

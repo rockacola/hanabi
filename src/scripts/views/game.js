@@ -9,6 +9,7 @@ var log = require('bows')('Game');
 var App = require('ampersand-app');
 var View = require('ampersand-view');
 var Utils = require('../base/utils');
+var Rng = require('../base/rng');
 var WorldView = require('./world');
 
 
@@ -37,6 +38,9 @@ var GameView = View.extend({
 
         attackType: ['string', true, 'peony'],
         attackLevel: ['number', true, 1],
+
+        SEED: ['string', true, 'gangnang'],
+        rng: 'object',
     },
 
     derived: {
@@ -133,9 +137,10 @@ var GameView = View.extend({
 
         // Bootstrap
         this.version = App.version;
+        this.rng = new Rng({ seed: this.SEED });
         this.playerImagePath = this.el.querySelector('.resources .player-image').src;
         this.playerActiveImagePath = this.el.querySelector('.resources .player-active-image').src;
-        this.world = new WorldView({ el: document.querySelector('[data-hook="drawing-board"]'), width: 800, height: 600 });
+        this.world = new WorldView({ parent: this, el: document.querySelector('[data-hook="drawing-board"]'), width: 800, height: 600 });
         this.world.addPlayer(this.playerImagePath, this.playerActiveImagePath);
 
         // Init setup
@@ -198,7 +203,7 @@ var GameView = View.extend({
             } else if(this.levelClock >= this.nextActionGameTime) {
                 this._setNextActionGameTime();
                 this._addAttack();
-                log('frame:', this.frameCount, 'game time:', this.gameClock, ' (', this.gameSeconds, 's)', 'level time:', this.levelClock, 'next action:', this.nextActionGameTime);
+                //log('frame:', this.frameCount, 'game time:', this.gameClock, ' (', this.gameSeconds, 's)', 'level time:', this.levelClock, 'next action:', this.nextActionGameTime);
             }
 
             // Action for each frame
@@ -223,7 +228,7 @@ var GameView = View.extend({
         var accelerationRate = 3;
         var nextInterval = baseInterval - Math.round(this.levelClock / 60 * accelerationRate);
         nextInterval = (nextInterval < minInterval) ? minInterval : nextInterval;
-        log('nextInterval:', nextInterval);
+        //log('nextInterval:', nextInterval);
         this.nextActionGameTime = this.levelClock + nextInterval;
     },
 
