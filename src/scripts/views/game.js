@@ -10,6 +10,7 @@ var App = require('ampersand-app');
 var View = require('ampersand-view');
 var Utils = require('../base/utils');
 var Rng = require('../base/rng');
+var GameSettings = require('../base/game-settings');
 var WorldView = require('./world');
 
 
@@ -20,9 +21,6 @@ var WorldView = require('./world');
 var GameView = View.extend({
 
     props: {
-        LEVEL_DURATION: ['number', true, function() { return 60*80; }], // Time length of each level
-        LEVEL_FIRST_WAVE: ['number', true, function() { return 60*6; }], // Waiting time before the 1st wave starts in a new level
-
         version: 'string',
         playerImagePath: 'string',
         playerActiveImagePath: 'string',
@@ -39,7 +37,6 @@ var GameView = View.extend({
         attackType: ['string', true, 'peony'],
         attackLevel: ['number', true, 1],
 
-        SEED: ['string', true, 'gangnang'],
         rng: 'object',
     },
 
@@ -79,7 +76,7 @@ var GameView = View.extend({
         levelProgress: {
             deps: ['levelClock'],
             fn: function() {
-                return (this.levelClock / this.LEVEL_DURATION);
+                return (this.levelClock / GameSettings.global.levelLength);
             }
         },
         levelProgressLabel: {
@@ -134,13 +131,12 @@ var GameView = View.extend({
     initialize: function() {
         log('initialize()');
 
-
         // Bootstrap
         this.version = App.version;
-        this.rng = new Rng({ seed: this.SEED });
+        this.rng = new Rng({ seed: GameSettings.global.randomSeed });
         this.playerImagePath = this.el.querySelector('.resources .player-image').src;
         this.playerActiveImagePath = this.el.querySelector('.resources .player-active-image').src;
-        this.world = new WorldView({ parent: this, el: document.querySelector('[data-hook="drawing-board"]'), width: 800, height: 600 });
+        this.world = new WorldView({ parent: this, el: document.querySelector('[data-hook="drawing-board"]'), width: GameSettings.global.worldWidth, height: GameSettings.global.worldHeight });
         this.world.addPlayer(this.playerImagePath, this.playerActiveImagePath);
 
         // Init setup
@@ -194,11 +190,11 @@ var GameView = View.extend({
 
             if(this.levelClock === 0) { // Level 1
                 //this.nextActionGameTime = this.LEVEL_FIRST_WAVE;
-                this.nextActionGameTime = 120;
-            } else if(this.levelClock == this.LEVEL_DURATION) { // Next level
+                this.nextActionGameTime = GameSettings.global.firstLevelFirstWaveInterval;
+            } else if(this.levelClock == GameSettings.global.levelLength) { // Next level
                 this.levelClock = 0; //TODO: should this be -1 instead?
                 this.attackLevel++;
-                this.nextActionGameTime = this.LEVEL_FIRST_WAVE;
+                this.nextActionGameTime = GameSettings.global.levelFirstWaveInterval;
                 log('NEXT LEVEL: ', this.attackLevel);
             } else if(this.levelClock >= this.nextActionGameTime) {
                 this._setNextActionGameTime();
