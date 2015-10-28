@@ -9,7 +9,6 @@
 var log = require('bows')('App');
 var App = require('ampersand-app');
 var MainView = require('./views/main');
-var Site = require('./models/site');
 var Utils = require('./base/utils');
 
 
@@ -26,9 +25,6 @@ var TheInstance = window.App = window.App || {
     init: function () {
         log('TheInstance.init()');
         var baseInstance = this;
-
-        //-- State / Model
-        baseInstance.site = new Site();
 
         //-- View
         baseInstance.view = new MainView({
