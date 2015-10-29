@@ -68,24 +68,15 @@ var WorldView = View.extend({
     },
 
     addAttack: function(designatedId, attackType, attackLevel) {
-        //TODO: shift this logic back to 'game' model
-
-        // Random properties
-        var horizontalPadding = this.width * 0.1;
-        var verticalPadding = this.height * 0.1;
-        var positionX = this.parent.rng.random(horizontalPadding, this.width - horizontalPadding);
-        var positionY = this.parent.rng.random(verticalPadding, this.height - verticalPadding);
-
+        var attackSeed;
         if(attackType == 'peony') {
-            this.seeds.push(new PeonySeed({
+            attackSeed = new PeonySeed({
                 _id: designatedId,
                 parent: this,
-                x: positionX,
-                y: positionY,
                 level: attackLevel,
-                collusionTolerance: this.settings.collusionTolerance
-            }));
+            });
         }
+        this.seeds.push(attackSeed);
     },
 
     setPlayerMovement: function(direction, toggle) {

@@ -114,6 +114,10 @@ var PeonySeed = State.extend({
         log('initialize() x:', this.x, 'y:', this.y, 'level:', this.level);
 
         // Init
+        var factor = 0.1; // Between 0 and 1
+        this.x = this.parent.parent.rng.random(this.parent.width * factor, this.parent.width * (1-factor));
+        this.y = this.parent.parent.rng.random(this.parent.height * factor, this.parent.height * (1-factor));
+        this.collusionTolerance = this.parent.settings.collusionTolerance;
         this._setAge();
 
         // Bootstrap
@@ -123,7 +127,6 @@ var PeonySeed = State.extend({
                 this.flares.push(new PeonyFlare({ parent: this, layer: i, angleDegrees: angle }));
             }
         }
-        //log('initialize() ID:', this._id, 'x:', this.x, 'y:', this.y, 'level:', this.level, 'layerCount:', this.layerCount);
     },
 
     // Event Handlers ----------------
