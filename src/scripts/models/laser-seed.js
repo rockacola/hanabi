@@ -39,7 +39,11 @@ var LaserSeed = State.extend({
         thickness: {
             deps: ['level'],
             fn: function() {
-                return 5;
+                if(this.level < 2) {
+                    return 5;
+                } else {
+                    return 5 + (3 * (this.level-2));
+                }
             }
         },
         colour: {
@@ -51,13 +55,13 @@ var LaserSeed = State.extend({
         ttl: { // in frame count
             deps: ['level'],
             fn: function() {
-                return 900;
+                return 60 * 9;
             }
         },
         velocity: {
             deps: ['level'],
             fn: function() {
-                return 2 + (1 * (this.level-1));
+                return 1.5 + (1 * (this.level-1));
             }
         },
         alpha: {
@@ -65,9 +69,6 @@ var LaserSeed = State.extend({
             fn: function() {
                 if(this.age < 0) { // Pre-existing
                     return 1 + (this.age/160);
-                } else if (this.age > this.ttl - 30) { // Decaying
-                    var inverseTimeLeft = 30 - (this.ttl - this.age);
-                    return 1 - (0.5 * inverseTimeLeft/30);
                 } else { // Default
                     return 1;
                 }
@@ -83,6 +84,18 @@ var LaserSeed = State.extend({
             deps: ['age', 'ttl'],
             fn: function() {
                 return (this.age <= this.ttl);
+            }
+        },
+        width: {
+            deps: ['spawnPosition', 'thickness', 'size'],
+            fn: function() {
+                return (this.spawnPosition == 'up' || this.spawnPosition == 'down') ? this.thickness : this.size;
+            }
+        },
+        height: {
+            deps: ['spawnPosition', 'thickness', 'size'],
+            fn: function() {
+                return (this.spawnPosition == 'up' || this.spawnPosition == 'down') ? this.size : this.thickness;
             }
         },
     },
@@ -157,7 +170,10 @@ var LaserSeed = State.extend({
     isCollided: function(player) {
         var result = false;
         if(!this.isPreExisting) {
-            //TODO
+            return Utils.IsRectangleCircleColliding(
+                {x: this.x - (this.width/2), y: this.y - (this.height/2), w: this.width, h: this.height},
+                {x: player.x, y: player.y, r: player.size * (1-this.collusionTolerance)} //TODO: factor in tolerance?
+            );
         }
         return result;
     },
@@ -170,10 +186,8 @@ var LaserSeed = State.extend({
             context.fillStyle = this.colour;
             context.fill();
         } else {
-            var width = (this.spawnPosition == 'up' || this.spawnPosition == 'down') ? this.thickness : this.size;
-            var height = (this.spawnPosition == 'up' || this.spawnPosition == 'down') ? this.size : this.thickness;
             context.fillStyle = this.colour;
-            context.fillRect(this.x - (width/2), this.y - (height/2), width, height);
+            context.fillRect(this.x - (this.width/2), this.y - (this.height/2), this.width, this.height);
         }
     }
 });

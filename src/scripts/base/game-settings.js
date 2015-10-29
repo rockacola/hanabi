@@ -26,6 +26,19 @@ var GameSettings = {
         collusionTolerance: 0.55, // 0 for as soon as touching it, 0.1 for 10% of intersection, 1 for center-to-center matching (highest tolerance).
     },
 
+    attacks: {
+        peony: {
+            baseInterval: 180,
+            minInterval: 30,
+            accelerationRate: 2.5,
+        },
+        laser: {
+            baseInterval: 120,
+            minInterval: 6,
+            accelerationRate: 2,
+        },
+    },
+
     GetSetting: function(attackType) {
         return 0; //TODO
     },

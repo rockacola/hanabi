@@ -213,11 +213,9 @@ var GameView = View.extend({
     },
 
     _setNextActionGameTime: function() {
-        var baseInterval = 180;
-        var minInterval = 30;
-        var accelerationRate = 2.5;
-        var nextInterval = baseInterval - Math.round(this.levelClock / 60 * accelerationRate);
-        nextInterval = (nextInterval < minInterval) ? minInterval : nextInterval;
+        var attackSettings = GameSettings.attacks[this.attackType];
+        var nextInterval = attackSettings.baseInterval - Math.round(this.levelClock / 60 * attackSettings.accelerationRate);
+        nextInterval = (nextInterval < attackSettings.minInterval) ? attackSettings.minInterval : nextInterval;
         //log('nextInterval:', nextInterval);
         this.nextActionGameTime = this.levelClock + nextInterval;
     },

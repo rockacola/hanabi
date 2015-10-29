@@ -26,19 +26,22 @@ HTML5 Game ([demo](http://rockacola.github.io/hanabi))
 * [Types of fireworks effects](http://www.fireworks.com/fireworks-university/fireworks-glossary/)
 
 ### Todo List
+* move peony's collision detection to utils
 * provide a random seed by default
 * has near collusion visual indication
 * usage of GA to track user's interactions
 * further settings model for different attack types
+* action to restart the game without refresh web page
+* action to change starting level
+* action to change attack type
+* death animation
 
 ### Backburner
 * add touch drag support
 * mouse support
 * display time in seconds instead of frames
 
-
 ### Roadmaps
-* Attack type: laser beam
 * SFX
 * Replay mechanism
 * user controlled slow motion feature/mechanism
