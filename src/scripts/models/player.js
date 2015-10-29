@@ -91,41 +91,60 @@ var Player = State.extend({
 
     grow: function() {
         // Examine vertical movements first
+        var targetX = this.x;
+        var targetY = this.y;
+
         if(this.isMovingUp && !this.isMovingDown) {
             if(!this.isMovingLeft && !this.isMovingRight) {
                 // Up
-                this.y -= this.velocity;
+                targetY = this.y - this.velocity;
             } else if(this.isMovingLeft && !this.isMovingRight) {
                 // Up Left
-                this.x -= this.velocity * Math.cos(Utils.GetRadians(45));
-                this.y -= this.velocity * Math.sin(Utils.GetRadians(45));
+                targetX = this.x - this.velocity * Math.cos(Utils.GetRadians(45));
+                targetY = this.y - this.velocity * Math.sin(Utils.GetRadians(45));
             } else if (this.isMovingRight && !this.isMovingLeft) {
                 // Up Right
-                this.x += this.velocity * Math.cos(Utils.GetRadians(45));
-                this.y -= this.velocity * Math.sin(Utils.GetRadians(45));
+                targetX = this.x + this.velocity * Math.cos(Utils.GetRadians(45));
+                targetY = this.y - this.velocity * Math.sin(Utils.GetRadians(45));
             }
         } else if (this.isMovingDown && !this.isMovingUp) {
             if(!this.isMovingLeft && !this.isMovingRight) {
                 // Down
-                this.y += this.velocity;
+                targetY = this.y + this.velocity;
             } else if(this.isMovingLeft && !this.isMovingRight) {
                 // Down Left
-                this.x -= this.velocity * Math.cos(Utils.GetRadians(45));
-                this.y += this.velocity * Math.sin(Utils.GetRadians(45));
+                targetX = this.x - this.velocity * Math.cos(Utils.GetRadians(45));
+                targetY = this.y + this.velocity * Math.sin(Utils.GetRadians(45));
             } else if (this.isMovingRight && !this.isMovingLeft) {
                 // Down Right
-                this.x += this.velocity * Math.cos(Utils.GetRadians(45));
-                this.y += this.velocity * Math.sin(Utils.GetRadians(45));
+                targetX = this.x + this.velocity * Math.cos(Utils.GetRadians(45));
+                targetY = this.y + this.velocity * Math.sin(Utils.GetRadians(45));
             }
         } else if (!this.isMovingUp && !this.isMovingDown) {
             if(this.isMovingLeft && !this.isMovingRight) {
                 // Left
-                this.x -= this.velocity;
+                targetX = this.x - this.velocity;
             } else if (this.isMovingRight && !this.isMovingLeft) {
                 // Right
-                this.x += this.velocity;
+                targetX = this.x + this.velocity;
             }
         }
+
+        // Sanitize
+        if(targetX < this.size) {
+            targetX = this.size;
+        } else if(targetX > this.parent.width - this.size) {
+            targetX = this.parent.width - this.size;
+        }
+        if(targetY < this.size) {
+            targetY = this.size;
+        } else if(targetY > this.parent.height - this.size) {
+            targetY = this.parent.height - this.size;
+        }
+
+        // Assign
+        this.x = targetX;
+        this.y = targetY;
     },
 
     draw: function(context) {

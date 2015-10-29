@@ -28,7 +28,6 @@ HTML5 Game ([demo](http://rockacola.github.io/hanabi))
 ### Todo List
 * provide a random seed by default
 * has near collusion visual indication
-* prevent player from going outside the wall
 * usage of GA to track user's interactions
 * further settings model for different attack types
 
