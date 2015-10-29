@@ -86,14 +86,10 @@ var PeonyFlare = State.extend({
     // Public Methods ----------------
 
     isCollided: function(player) {
-        var toleranceRatio = 1 - this.parent.collusionTolerance;
-        var distance = Math.sqrt(
-            Math.pow((this.x - player.x), 2) +
-            Math.pow((this.y - player.y), 2)
+        return Utils.IsCircleCircleColliding(
+            {x: this.x, y: this.y, r: this.parent.size},
+            {x: player.x, y: player.y, r: player.size * (1-this.parent.collusionTolerance)}
         );
-        if(distance <= (this.parent.size + player.size) * toleranceRatio) {
-            return true;
-        }
     },
 
     draw: function(context) {

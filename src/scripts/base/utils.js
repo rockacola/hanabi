@@ -71,15 +71,13 @@ var Utils = {
         return (dx*dx+dy*dy<=(circle.r*circle.r));
     },
 
-
-
-
-
-
-
-
-
-
+    IsCircleCircleColliding: function(circle1, circle2) {
+        var distance = Math.sqrt(
+            Math.pow((circle1.x - circle2.x), 2) +
+            Math.pow((circle1.y - circle2.y), 2)
+        );
+        return (distance <= (circle1.r + circle2.r));
+    },
 
     // Validation ----------------
 
