@@ -8,9 +8,10 @@
 var log = require('bows')('World');
 var View = require('ampersand-view');
 var Utils = require('../base/utils');
-var PeonySeed = require('../models/peony-seed');
-var Player = require('../models/player');
 var Rng = require('../base/rng');
+var Player = require('../models/player');
+var PeonySeed = require('../models/peony-seed');
+var LaserSeed = require('../models/laser-seed');
 
 
 
@@ -68,15 +69,19 @@ var WorldView = View.extend({
     },
 
     addAttack: function(designatedId, attackType, attackLevel) {
-        var attackSeed;
         if(attackType == 'peony') {
-            attackSeed = new PeonySeed({
+            this.seeds.push(new PeonySeed({
                 _id: designatedId,
                 parent: this,
                 level: attackLevel,
-            });
+            }));
+        } else if(attackType == 'laser') {
+            this.seeds.push(new LaserSeed({
+                _id: designatedId,
+                parent: this,
+                level: attackLevel,
+            }));
         }
-        this.seeds.push(attackSeed);
     },
 
     setPlayerMovement: function(direction, toggle) {

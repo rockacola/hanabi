@@ -1,58 +1,57 @@
 //
-// Site / Model / Peony Seed
+// Site / Model / Laser Seed
 //
 
 'use strict';
 
 // Dependencies
-var log = require('bows')('PeonySeed');
+var log = require('bows')('LaserSeed');
 var State = require('ampersand-state');
 var Utils = require('../base/utils');
-var PeonyFlare = require('./peony-flare');
 
 
 
 // App State
 // --------------------------------------------------
 
-var PeonySeed = State.extend({
+var LaserSeed = State.extend({
 
     props: {
         ATTACK_INDICATOR_SIZE: ['number', true, 16],
 
         _id: 'number',
         parent: 'object',
+        spawnPosition: 'string',
         x: 'number',
         y: 'number',
         level: 'number',
         collusionTolerance: 'number',
         age: ['number', true, 0],
-        flares: ['array', true, function() { return []; }],
     },
 
     derived: {
         size: {
             deps: ['level'],
             fn: function() {
-                return 6;
+                return 100 + (50 * (this.level-1));
+            }
+        },
+        thickness: {
+            deps: ['level'],
+            fn: function() {
+                return 5;
             }
         },
         colour: {
             deps: ['level'],
             fn: function() {
-                return '#dd8801';
+                return '#37FDFC';
             }
         },
         ttl: { // in frame count
             deps: ['level'],
             fn: function() {
-                return 90;
-            }
-        },
-        layerCount: {
-            deps: ['level'],
-            fn: function() {
-                return 2 * this.level;
+                return 900;
             }
         },
         velocity: {
@@ -71,16 +70,6 @@ var PeonySeed = State.extend({
                     return 1 - (0.5 * inverseTimeLeft/30);
                 } else { // Default
                     return 1;
-                }
-            }
-        },
-        flareCount: {
-            deps: ['level'],
-            fn: function() {
-                if(this.level == 1) {
-                    return 8;
-                } else {
-                    return 12;
                 }
             }
         },
@@ -116,14 +105,6 @@ var PeonySeed = State.extend({
         this._setSpawn();
         this._setAge();
 
-        // Bootstrap
-        for(var i=1; i<=this.layerCount; i++) {
-            for(var j=0; j<this.flareCount; j++) {
-                var angle = (360 / this.flareCount) * (j);
-                this.flares.push(new PeonyFlare({ parent: this, layer: i, angleDegrees: angle }));
-            }
-        }
-
         log('initialize() x:', this.x, 'y:', this.y, 'level:', this.level);
     },
 
@@ -132,9 +113,23 @@ var PeonySeed = State.extend({
     // Private Methods ----------------
 
     _setSpawn: function() {
-        var factor = 0.1; // Between 0 and 1
-        this.x = this.parent.parent.rng.random(this.parent.width * factor, this.parent.width * (1-factor));
-        this.y = this.parent.parent.rng.random(this.parent.height * factor, this.parent.height * (1-factor));
+        var spawnPositions = ['up', 'right', 'down', 'left'];
+        this.spawnPosition = spawnPositions[this.parent.parent.rng.random(0, 3)];
+
+        var factor = 0.05; // Between 0 and 1
+        if(this.spawnPosition == 'up') {
+            this.x = this.parent.parent.rng.random(this.parent.width * factor, this.parent.width * (1-factor));
+            this.y = 0;
+        } else if(this.spawnPosition == 'down') {
+            this.x = this.parent.parent.rng.random(this.parent.width * factor, this.parent.width * (1-factor));
+            this.y = this.parent.height;
+        } else if(this.spawnPosition == 'left') {
+            this.x = 0;
+            this.y = this.parent.parent.rng.random(this.parent.height * factor, this.parent.height * (1-factor));
+        } else if(this.spawnPosition == 'right') {
+            this.x = this.parent.width;
+            this.y = this.parent.parent.rng.random(this.parent.height * factor, this.parent.height * (1-factor));
+        }
     },
 
     _setAge: function() {
@@ -145,16 +140,24 @@ var PeonySeed = State.extend({
 
     grow: function() {
         this.age++;
+
+        if(!this.isPreExisting) {
+            if(this.spawnPosition == 'up') {
+                this.y += this.velocity;
+            } else if(this.spawnPosition == 'down') {
+                this.y -= this.velocity;
+            } else if(this.spawnPosition == 'left') {
+                this.x += this.velocity;
+            } else if(this.spawnPosition == 'right') {
+                this.x -= this.velocity;
+            }
+        }
     },
 
     isCollided: function(player) {
         var result = false;
         if(!this.isPreExisting) {
-            Utils.forEach(this.flares, function(flare) {
-                if(flare.isCollided(player)) {
-                    result = true;
-                }
-            });
+            //TODO
         }
         return result;
     },
@@ -163,15 +166,14 @@ var PeonySeed = State.extend({
         if(this.isPreExisting) {
             context.beginPath();
             context.arc(this.x, this.y, this.ATTACK_INDICATOR_SIZE, 0, 2*Math.PI, false);
-            //context.globalAlpha = 0.6;
-            //context.fillStyle = '#e1855a';
             context.globalAlpha = this.alpha;
             context.fillStyle = this.colour;
             context.fill();
         } else {
-            Utils.forEach(this.flares, function(flare) {
-                flare.draw(context);
-            });
+            var width = (this.spawnPosition == 'up' || this.spawnPosition == 'down') ? this.thickness : this.size;
+            var height = (this.spawnPosition == 'up' || this.spawnPosition == 'down') ? this.size : this.thickness;
+            context.fillStyle = this.colour;
+            context.fillRect(this.x - (width/2), this.y - (height/2), width, height);
         }
     }
 });
@@ -181,4 +183,4 @@ var PeonySeed = State.extend({
 // Exports
 // --------------------------------------------------
 
-module.exports = PeonySeed;
+module.exports = LaserSeed;
